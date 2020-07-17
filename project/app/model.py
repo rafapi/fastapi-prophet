@@ -29,7 +29,7 @@ def train(ticker="MSFT"):
     joblib.dump(model, Path(BASE_DIR).joinpath(f'{ticker}.joblib'))
 
 
-def predict(ticker="MSFT", days=7):
+async def predict(ticker="MSFT", days=7):
     model_file = Path(BASE_DIR).joinpath(f'{ticker}.joblib')
     if not model_file.exists():
         return False
@@ -41,7 +41,7 @@ def predict(ticker="MSFT", days=7):
     dates = pd.date_range(start="2020-01-01", end=future.strftime("%m/%d/%Y"),)
     df = pd.DataFrame({"ds": dates})
 
-    forecast = model.predict(df)
+    forecast = await model.predict(df)
 
     model.plot(forecast).savefig(f"{ticker}_plot.png")
     model.plot_components(forecast).savefig(f"{ticker}_plot_components.png")

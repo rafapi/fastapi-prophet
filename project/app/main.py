@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
-from model import convert, predict
+from .model import convert, predict
 
 
 app = FastAPI()
@@ -23,10 +23,10 @@ def pong():
 
 
 @app.post("/predict", response_model=StockOut, status_code=200)
-def get_prediction(payload: StockIn):
+async def get_prediction(payload: StockIn):
     ticker = payload.ticker
 
-    prediction_list = predict(ticker)
+    prediction_list = await predict(ticker)
 
     if not prediction_list:
         raise HTTPException(status_code=400, detail="Model not found.")
