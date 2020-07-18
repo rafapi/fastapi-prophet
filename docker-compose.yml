@@ -6,6 +6,20 @@ services:
     build: ./project
     command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
     volumes:
-      - ./project:/usr/src/app
+      - ./project/:/usr/src/app/
     ports:
       - 8002:8000
+    environment:
+      - DATABASE_URL=postgresql://prophet_fastapi:hello_fastapi@db/prophet_fastapi_dev
+
+  db:
+    image: postgres:12.1-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=prophet_fastapi
+      - POSTGRES_PASSWORD=hello_fastapi
+      - POSTGRES_DB=prophet_fastapi_dev
+
+volumes:
+  postgres_data:

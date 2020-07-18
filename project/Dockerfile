@@ -2,7 +2,7 @@ FROM python:3.7.8-slim-buster
 
 # install system dependencies
 RUN apt-get update \
-  && apt-get -y install build-essential \
+  && apt-get -y install build-essential postgresql \
   && apt-get clean
 
 # set working directory
