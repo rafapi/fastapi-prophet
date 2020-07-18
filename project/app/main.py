@@ -2,9 +2,12 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 from .model import convert, predict
+from app.api import ping
 
 
 app = FastAPI()
+
+app.include_router(ping.router)
 
 
 # pydantic models
@@ -14,12 +17,6 @@ class StockIn(BaseModel):
 
 class StockOut(BaseModel):
     forecast: dict
-
-
-# routes
-@app.get("/ping")
-def pong():
-    return {"ping": "pong!"}
 
 
 @app.post("/predict", response_model=StockOut, status_code=200)

@@ -6,3 +6,7 @@ joblib==0.16.0
 plotly==4.8.2
 yfinance==0.1.54
 gunicorn==20.0.4
+
+# dev
+pytest==5.4.3
+requests==2.24.0
