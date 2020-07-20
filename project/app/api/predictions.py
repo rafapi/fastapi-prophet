@@ -1,10 +1,9 @@
-import json
-
 from typing import List
 
 from app.api import crud
 from app.api.models import StockIn, StockOut, PredictionSchema
 from app.prediction_engine import generate_prediction
+from app.utils import pred_to_dict
 from fastapi import APIRouter, HTTPException, BackgroundTasks
 
 
@@ -31,14 +30,13 @@ async def create_prediction(payload: StockIn,
 async def get_prediction(id: int) -> PredictionSchema:
     prediction_items = await crud.get(id)
     if not prediction_items:
-        raise HTTPException(status_code=404, detail="Prediction not found")
+        raise HTTPException(status_code=404,
+                            detail="Prediction not found")
 
-    pred_dict = {}
-    for k, v in prediction_items.items():
-        pred_dict[k] = json.loads(v) if k == 'prediction' else v
-    return pred_dict
+    return pred_to_dict(prediction_items)
 
 
 @router.get("/", response_model=List[PredictionSchema])
 async def get_all_predictions() -> List[PredictionSchema]:
-    return await crud.get_all()
+    prediction_items = await crud.get_all()
+    return [pred_to_dict(pred) for pred in prediction_items]
