@@ -11,5 +11,5 @@ class StockOut(StockIn):
 
 
 class PredictionSchema(StockOut):
-    prediction: str
+    prediction: dict
     created_date: datetime
