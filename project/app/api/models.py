@@ -1,6 +1,10 @@
 from pydantic import BaseModel
 
 
-class PredictionSchema(BaseModel):
+class StockIn(BaseModel):
     ticker: str
-    description: str
+
+
+class StockOut(BaseModel):
+    ticker: str
+    prediction: str
