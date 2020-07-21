@@ -4,7 +4,7 @@ from app.api import crud
 from app.api.models import StockIn, StockOut, PredictionSchema
 from app.prediction_engine import generate_prediction
 from app.utils import pred_to_dict
-from fastapi import APIRouter, HTTPException, BackgroundTasks
+from fastapi import APIRouter, HTTPException, BackgroundTasks, Path
 
 
 router = APIRouter()
@@ -27,7 +27,7 @@ async def create_prediction(payload: StockIn,
 
 
 @router.get("/{id}/", response_model=PredictionSchema)
-async def get_prediction(id: int) -> PredictionSchema:
+async def get_prediction(id: int = Path(..., gt=0)) -> PredictionSchema:
     prediction_items = await crud.get(id)
     if not prediction_items:
         raise HTTPException(status_code=404,
