@@ -63,10 +63,10 @@ jobs:
             -p 5003:8765 \
             ${{ env.IMAGE }}:latest
       - name: Pytest
-        run: docker exec fastapi-tdd python -m pytest .
+        run: docker exec fastapi-prophet python -m pytest .
       - name: Flake8
-        run: docker exec fastapi-tdd python -m flake8 .
+        run: docker exec fastapi-prophet python -m flake8 .
       - name: Black
-        run: docker exec fastapi-tdd python -m black . --check
+        run: docker exec fastapi-prophet python -m black . --check
       - name: isort
-        run: docker exec fastapi-tdd /bin/sh -c "python -m isort ./*/*.py --check-only"
+        run: docker exec fastapi-prophet /bin/sh -c "python -m isort ./*/*.py --check-only"
