@@ -59,7 +59,7 @@ jobs:
             --name fastapi-prophet \
             -e PORT=8765 \
             -e ENVIRONMENT=dev \
-            -e DATABASE_URL=sqlite://sqlite.db \
+            -e DATABASE_URL=sqlite:///sqlite.db \
             -p 5003:8765 \
             ${{ env.IMAGE }}:latest
       - name: Pytest
