@@ -6,7 +6,6 @@ import pandas as pd
 import yfinance as yf
 from fbprophet import Prophet
 
-
 BASE_DIR = Path(__file__).resolve(strict=True).parent
 TODAY = datetime.date.today()
 
@@ -26,11 +25,11 @@ def train(ticker="MSFT"):
     model = Prophet()
     model.fit(df_forecast)
 
-    joblib.dump(model, Path(BASE_DIR).joinpath(f'{ticker}.joblib'))
+    joblib.dump(model, Path(BASE_DIR).joinpath(f"{ticker}.joblib"))
 
 
 async def predict(ticker="MSFT", days=7):
-    model_file = Path(BASE_DIR).joinpath(f'{ticker}.joblib')
+    model_file = Path(BASE_DIR).joinpath(f"{ticker}.joblib")
     if not model_file.exists():
         return False
 

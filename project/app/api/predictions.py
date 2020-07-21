@@ -11,17 +11,12 @@ router = APIRouter()
 
 
 @router.post("/", response_model=StockOut, status_code=201)
-async def create_prediction(payload: StockIn,
-                            background_tasks: BackgroundTasks):
+async def create_prediction(payload: StockIn, background_tasks: BackgroundTasks):
     prediction_id = await crud.post(payload)
 
-    background_tasks.add_task(generate_prediction,
-                              prediction_id, payload.ticker)
+    background_tasks.add_task(generate_prediction, prediction_id, payload.ticker)
 
-    response_object = {
-            "id": prediction_id,
-            "ticker": payload.ticker
-            }
+    response_object = {"id": prediction_id, "ticker": payload.ticker}
 
     return response_object
 
@@ -30,8 +25,7 @@ async def create_prediction(payload: StockIn,
 async def get_prediction(id: int = Path(..., gt=0)) -> PredictionSchema:
     prediction_items = await crud.get(id)
     if not prediction_items:
-        raise HTTPException(status_code=404,
-                            detail="Prediction not found")
+        raise HTTPException(status_code=404, detail="Prediction not found")
 
     return pred_to_dict(prediction_items)
 

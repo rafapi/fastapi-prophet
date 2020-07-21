@@ -1,9 +1,7 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+from fastapi import FastAPI
 
 from app.api import ping, predictions
-from app.db import engine, metadata, database
-
+from app.db import database, engine, metadata
 
 metadata.create_all(engine)
 
