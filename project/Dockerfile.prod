@@ -1,34 +1,78 @@
-FROM python:3.7.8-slim-buster
+###########
+# BUILDER #
+###########
 
-RUN mkdir -p /home/app
-RUN addgroup --system app && adduser --system --group app
-
-# create directories
-ENV HOME=/home/app
-ENV APP_HOME=/home/app/web
-RUN mkdir $APP_HOME
-WORKDIR $APP_HOME
-
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-ENV ENVIRONMENT prod
-ENV TESTING 0
+FROM python:3.7.8-slim-buster as builder
 
 RUN apt-get update \
   && apt-get -y install netcat build-essential postgresql \
   && apt-get clean
 
-RUN pip install --upgrade pip
-COPY ./pre-reqs.txt .
-COPY ./requirements.txt .
-COPY ./requirements-dev.txt .
-RUN pip install -r pre-reqs.txt
-RUN pip install -r requirements-dev.txt
+WORKDIR /usr/src/app
 
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+RUN pip install --upgrade pip
+COPY ./requirements.txt .
+COPY ./pre-reqs.txt .
+RUN pip install -r pre-reqs.txt
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
+
+COPY . /usr/src/app/
+RUN pip install black flake8 isort
+RUN flake8 .
+RUN black --exclude=migrations .
+RUN isort ./**/*.py
+
+#########
+# FINAL #
+#########
+
+# pull official base image
+FROM python:3.8.3-slim-buster
+
+# create directory for the app user
+RUN mkdir -p /home/app
+
+# create the app user
+RUN addgroup --system app && adduser --system --group app
+
+# create the appropriate directories
+ENV HOME=/home/app
+ENV APP_HOME=/home/app/web
+RUN mkdir $APP_HOME
+WORKDIR $APP_HOME
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+ENV ENVIRONMENT prod
+ENV TESTING 0
+
+# install system dependencies
+RUN apt-get update \
+  && apt-get -y install netcat build-essential postgresql \
+  && apt-get clean
+
+# install python dependencies
+COPY --from=builder /usr/src/app/wheels /wheels
+COPY --from=builder /usr/src/app/pre-reqs.txt .
+COPY --from=builder /usr/src/app/requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install SQLAlchemy==1.3.18
+RUN pip install asyncpg==0.20.1
+RUN pip install numpy==1.19.0
+RUN pip install Cython==0.29.21
+RUN pip install --no-cache /wheels/*
+
+# add app
 COPY . .
 
-RUN chown -R app:app $APP_HOME
+# chown all the files to the app user
+RUN chown -R app:app $HOME
 
+# change to the app user
 USER app
 
 CMD gunicorn --bind 0.0.0.0:8000 app.main:app -k uvicorn.workers.UvicornWorker
