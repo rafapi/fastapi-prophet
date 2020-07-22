@@ -10,10 +10,11 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 RUN pip install --upgrade pip
-COPY ./requirements.txt .
 COPY ./pre-reqs.txt .
+COPY ./requirements.txt .
+COPY ./requirements-dev.txt .
 RUN pip install -r pre-reqs.txt
-RUN pip install -r requirements.txt
+RUN pip install -r requirements-dev.txt
 
 COPY . .
 

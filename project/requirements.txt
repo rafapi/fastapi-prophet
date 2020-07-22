@@ -10,11 +10,3 @@ joblib==0.16.0
 plotly==4.8.2
 yfinance==0.1.54
 gunicorn==20.0.4
-
-# dev
-pytest==5.4.3
-pytest-cov==2.10.0
-requests==2.24.0
-flake8===3.8.2
-black==19.10b0
-isort==5.1.4
