@@ -56,19 +56,19 @@ jobs:
         run: |
           docker run \
             -d \
-            --name fastapi-prophet \
+            --name fastapi-tdd \
             -e PORT=8765 \
             -e ENVIRONMENT=dev \
             -e DATABASE_TEST_URL=sqlite://sqlite.db \
             -p 5003:8765 \
             ${{ env.IMAGE }}:latest
       - name: Install requirements
-        run: docker exec fastapi-prophet pip install black flake8 isort pytest
+        run: docker exec fastapi-tdd pip install black flake8 isort pytest
       - name: Pytest
-        run: docker exec fastapi-prophet python -m pytest .
+        run: docker exec fastapi-tdd python -m pytest .
       - name: Flake8
-        run: docker exec fastapi-prophet python -m flake8 .
+        run: docker exec fastapi-tdd python -m flake8 .
       - name: Black
-        run: docker exec fastapi-prophet python -m black . --check
+        run: docker exec fastapi-tdd python -m black . --check
       - name: isort
-        run: docker exec fastapi-prophet /bin/sh -c "python -m isort ./*/*.py --check-only"
+        run: docker exec fastapi-tdd /bin/sh -c "python -m isort ./*/*.py --check-only"
