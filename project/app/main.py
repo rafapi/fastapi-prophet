@@ -1,7 +1,12 @@
+import logging
+
 from fastapi import FastAPI
 
 from app.api import ping, predictions
 from app.db import database, engine, metadata
+
+
+log = logging.getLogger(__name__)
 
 metadata.create_all(engine)
 
@@ -20,9 +25,11 @@ app = create_application()
 
 @app.on_event("startup")
 async def startup():
+    log.info("Starting up...")
     await database.connect()
 
 
 @app.on_event("shutdown")
 async def shutdown():
+    log.info("Shutting down...")
     await database.disconnect()
