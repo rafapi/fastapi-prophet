@@ -14,9 +14,7 @@ metadata.create_all(engine)
 def create_application() -> FastAPI:
     application = FastAPI()
     application.include_router(ping.router)
-    application.include_router(
-            predictions.router, prefix="/predict", tags=["predict"]
-    )
+    application.include_router(predictions.router, prefix="/predict", tags=["predict"])
     return application
 
 
