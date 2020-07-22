@@ -1,15 +1,22 @@
 FROM python:3.7.8-slim-buster
 
-RUN apt-get update \
-  && apt-get -y install netcat build-essential postgresql \
-  && apt-get clean
+RUN mkdir -p /home/app
+RUN addgroup --system app && adduser --system --group app
 
-WORKDIR /usr/src/app
+# create directories
+ENV HOME=/home/app
+ENV APP_HOME=/home/app/web
+RUN mkdir $APP_HOME
+WORKDIR $APP_HOME
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV ENVIRONMENT prod
 ENV TESTING 0
+
+RUN apt-get update \
+  && apt-get -y install netcat build-essential postgresql \
+  && apt-get clean
 
 RUN pip install --upgrade pip
 COPY ./requirements.txt .
@@ -18,5 +25,9 @@ RUN pip install -r pre-reqs.txt
 RUN pip install -r requirements.txt
 
 COPY . .
+
+RUN chown -R app:app $APP_HOME
+
+USER app
 
 CMD gunicorn --bind 0.0.0.0:8000 app.main:app -k uvicorn.workers.UvicornWorker
