@@ -5,44 +5,49 @@
 FROM python:3.7.8-slim-buster as builder
 
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends \
-             netcat build-essential postgresql \
+  && apt-get install -y --no-install-recommends build-essential \
   && apt-get clean
 
 WORKDIR /usr/src/app
 
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+RUN python -m venv /opt/venv
+# Make sure we use the virtualenv:
+ENV PATH="/opt/venv/bin:$PATH"
 
-RUN pip install --upgrade pip
-COPY ./requirements.txt .
-COPY ./pre-reqs.txt .
-RUN pip install --user -r pre-reqs.txt
-RUN pip install --user -r requirements.txt
-
-COPY . .
+RUN pip install --upgrade pip && pip install pip-tools
+COPY ./pre-reqs.in .
+COPY ./requirements.in .
+COPY ./requirements-dev.in .
+RUN pip-compile pre-reqs.in > pre-reqs.txt
+RUN pip-compile requirements.in > requirements.txt
+RUN pip-compile requirements-dev.in > requirements-dev.txt
+RUN pip-sync pre-reqs.txt requirements.txt requirements-dev.txt
+RUN pip install -r pre-reqs.txt
+RUN pip install -r requirements.txt
+RUN pip install -r requirements-dev.txt
 
 #########
 # FINAL #
 #########
 
 # pull official base image
-FROM python:3.8.3-slim-buster
+FROM python:3.7.8-slim-buster
 
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends \
-             netcat postgresql \
+  && apt-get install -y --no-install-recommends netcat postgresql \
   && apt-get clean
 
-WORKDIR /usr/src/app
-
+## set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# install python dependencies
-COPY --from=builder /root/.local /root/.local
+COPY --from=builder /opt/venv /opt/venv
 
-# add app
+# Make sure we use the virtualenv:
+ENV PATH="/opt/venv/bin:$PATH"
+
+WORKDIR /usr/src/app
+
 COPY . .
 
 CMD gunicorn --bind 0.0.0.0:8000 app.main:app -k uvicorn.workers.UvicornWorker
