@@ -34,7 +34,7 @@ RUN pip install -r requirements-dev.txt
 FROM python:3.7.8-slim-buster
 
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends netcat postgresql \
+  && apt-get install -y --no-install-recommends postgresql netcat \
   && apt-get clean
 
 ## set environment variables
