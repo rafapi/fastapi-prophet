@@ -50,6 +50,7 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN ls /opt/venv/bin
+COPY ./entrypoint.sh .
+RUN chmod +x /usr/src/app/entrypoint.sh
 
 ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
