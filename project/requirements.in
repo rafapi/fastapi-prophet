@@ -1,10 +1,9 @@
-databases[postgresql]==0.3.2
-aiosqlite==0.15.0
+databases[postgresql]==0.4.1
+aiosqlite==0.16.1
 fastapi==0.62.0
-uvicorn==0.13.1
-flake8===3.8.2
-fbprophet==0.6
-joblib==0.16.0
-plotly==4.8.2
-yfinance==0.1.54
+uvicorn==0.13.3
+fbprophet==0.7.1
+joblib==1.0.0
+plotly==4.14.3
+yfinance==0.1.55
 gunicorn==20.0.4
