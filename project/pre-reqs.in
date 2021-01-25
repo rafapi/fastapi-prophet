@@ -5,5 +5,5 @@ Cython==0.29.21
 pandas==1.0.5
 LunarCalendar==0.0.9
 holidays==0.10.3
-convertdate==2.2.1
+convertdate==2.2.0
 pystan==2.19.1.1
