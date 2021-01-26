@@ -7,6 +7,9 @@ from app.main import create_application
 from app.config import Settings, get_settings
 
 
+# testing the test!
+DATABASE_TEST_URL="sqlite://sqlite.db"
+    
 def get_settings_override():
     return Settings(testing=1, database_url=os.environ.get("DATABASE_TEST_URL"))
 
