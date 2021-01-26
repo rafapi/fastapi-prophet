@@ -19,8 +19,8 @@ RUN pip install --upgrade pip && pip install pip-tools
 COPY ./pre-reqs.in .
 COPY ./requirements.in .
 COPY ./requirements-dev.in .
-RUN pip-compile pre-reqs.in > pre-reqs.txt \
-    && pip-compile requirements.in > requirements.txt \
+RUN pip-compile pre-reqs.in > pre-reqs.txt
+RUN pip-compile requirements.in > requirements.txt \
     && pip-sync pre-reqs.txt requirements.txt
 RUN pip install -r pre-reqs.txt \
     && pip install -r requirements.txt

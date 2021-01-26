@@ -1,5 +1,4 @@
 databases[postgresql]==0.4.1
-aiosqlite==0.16.1
 fastapi==0.62.0
 uvicorn==0.13.3
 fbprophet==0.7.1
