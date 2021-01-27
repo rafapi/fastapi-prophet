@@ -17,9 +17,14 @@ def test_create_prediction(test_app, monkeypatch):
     def mock_generate_prediction(id, ticker):
         return None
 
-    monkeypatch.setattr(predictions, "generate_prediction", mock_generate_prediction)
+    monkeypatch.setattr(
+        predictions, "generate_prediction", mock_generate_prediction
+    )
 
-    response = test_app.post("/predict/", data=json.dumps(test_request_payload),)
+    response = test_app.post(
+        "/predict/",
+        data=json.dumps(test_request_payload),
+    )
 
     assert response.status_code == 201
     assert response.json() == test_response_payload
