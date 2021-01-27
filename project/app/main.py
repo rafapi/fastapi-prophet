@@ -3,11 +3,12 @@ import logging
 from fastapi import FastAPI
 
 from app.api import ping, predictions
-from app.db import database, engine
-from app.db import metadata
+from app.db import metadata, database, get_engine
 
 
 log = logging.getLogger(__name__)
+
+engine = get_engine()
 
 metadata.create_all(engine)
 
