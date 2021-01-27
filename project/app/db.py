@@ -5,6 +5,10 @@ from sqlalchemy import Column, DateTime, Integer, MetaData, String, Table, creat
 from sqlalchemy.sql import func
 
 DATABASE_URL = os.getenv("DATABASE_URL")
+if DATABASE_URL is None:
+    # testing the test!
+    DATABASE_TEST_URL="sqlite://sqlite.db"
+    DATABASE_URL = DATABASE_TEST_URL
 
 # SQLAlchemy
 engine = create_engine(DATABASE_URL)
