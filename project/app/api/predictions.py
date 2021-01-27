@@ -1,7 +1,7 @@
 from typing import List
 
 from app.api import crud
-from app.api.models import StockIn, StockOut, PredictionSchema
+from app.models.pydantic import StockIn, StockOut, PredictionSchema
 from app.prediction_engine import generate_prediction
 from app.utils import pred_to_dict
 from fastapi import APIRouter, HTTPException, BackgroundTasks, Path
@@ -36,5 +36,5 @@ async def get_prediction(id: int = Path(..., gt=0)) -> PredictionSchema:
 
 @router.get("/", response_model=List[PredictionSchema])
 async def get_all_predictions() -> List[PredictionSchema]:
-    prediction_items = await crud.get_all()
+    prediction_items = await crud.get_all_records()
     return [pred_to_dict(pred) for pred in prediction_items]
