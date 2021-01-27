@@ -1,10 +1,12 @@
 import json
 
-from app.db import database, predictions
-from app.model import convert, predict
+from app.models.pydantic import StockIn
+from app.db import database
+from app.models.sqlalchemy import predictions
+from app.prophet import convert, predict
 
 
-async def generate_prediction(id: int, ticker: str):
+async def generate_prediction(id: int, ticker: StockIn):
     prediction_list = await predict(ticker)
     prediction_data = json.dumps(convert(prediction_list))
 
