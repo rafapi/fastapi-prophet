@@ -37,7 +37,10 @@ async def predict(ticker="MSFT", days=7):
 
     future = TODAY + datetime.timedelta(days=days)
 
-    dates = pd.date_range(start="2020-01-01", end=future.strftime("%m/%d/%Y"),)
+    dates = pd.date_range(
+        start="2020-01-01",
+        end=future.strftime("%m/%d/%Y"),
+    )
     df = pd.DataFrame({"ds": dates})
 
     forecast = model.predict(df)
