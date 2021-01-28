@@ -7,7 +7,7 @@ FROM python:3.8.6-slim-buster as builder
 
 # install system dependencies
 RUN apt-get update \
-  && apt-get -y install gcc postgresql \
+  && apt-get install -y --no-install-recommends build-essential postgresql \
   && apt-get clean
 
 # set work directory
