@@ -16,10 +16,8 @@ WORKDIR /usr/src/app
 # set environment varibles
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-
-RUN python -m venv /opt/venv
-# Make sure we use the virtualenv:
-ENV PATH="/opt/venv/bin:$PATH"
+ENV ENVIRONMENT prod
+ENV TESTING 0
 
 RUN pip install --upgrade pip && pip install pip-tools
 COPY ./pre-reqs.in .
@@ -30,54 +28,10 @@ RUN pip-sync pre-reqs.txt requirements.txt
 RUN pip install -r pre-reqs.txt
 RUN pip install -r requirements.txt
 
-
-#########
-# FINAL #
-#########
-
-# pull official base image
-FROM python:3.8.6-slim-buster
-
-# create directory for the app user
-RUN mkdir -p /home/app
-
-# create the app user
-RUN addgroup --system app && adduser --system --group app
-
-# create the appropriate directories
-ENV HOME=/home/app
-ENV APP_HOME=/home/app/web
-RUN mkdir $APP_HOME
-WORKDIR $APP_HOME
-
-# set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-ENV ENVIRONMENT prod
-ENV TESTING 0
-
-# install system dependencies
-RUN apt-get update \
-  && apt-get -y install netcat gcc postgresql \
-  && apt-get clean
-
 COPY --from=builder /opt/venv /opt/venv
 RUN pip install --upgrade pip
 RUN pip install "uvicorn[standard]==0.13.1"
 
-# Make sure we use the virtualenv:
-ENV PATH="/opt/venv/bin:$PATH"
-
 COPY . .
 
-RUN ls .
-RUN cat app/api/crud.py
-
-# chown all the files to the app user
-RUN chown -R app:app $HOME
-
-# change to the app user
-USER app
-
-# gunicorn
 CMD gunicorn --bind 0.0.0.0:$PORT app.main:app -k uvicorn.workers.UvicornWorker
