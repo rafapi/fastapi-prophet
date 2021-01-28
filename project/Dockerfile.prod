@@ -28,7 +28,6 @@ RUN pip-sync pre-reqs.txt requirements.txt
 RUN pip install -r pre-reqs.txt
 RUN pip install -r requirements.txt
 
-COPY --from=builder /opt/venv /opt/venv
 RUN pip install --upgrade pip
 RUN pip install "uvicorn[standard]==0.13.1"
 
