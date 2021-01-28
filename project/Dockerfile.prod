@@ -47,6 +47,8 @@ WORKDIR /usr/src/app
 
 COPY . .
 
+RUN ls .
+
 COPY ./entrypoint.sh .
 RUN chmod +x /usr/src/app/entrypoint.sh
 
