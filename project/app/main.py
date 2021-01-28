@@ -8,10 +8,6 @@ from app.db import metadata, database, get_engine
 
 log = logging.getLogger(__name__)
 
-engine = get_engine()
-
-metadata.create_all(engine)
-
 
 def create_application() -> FastAPI:
     application = FastAPI()
@@ -23,6 +19,8 @@ def create_application() -> FastAPI:
 
 
 app = create_application()
+
+metadata.create_all(get_engine())
 
 
 @app.on_event("startup")

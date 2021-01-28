@@ -36,5 +36,5 @@ async def get_prediction(id: int = Path(..., gt=0)) -> PredictionSchema:
 
 @router.get("/", response_model=List[PredictionSchema])
 async def get_all_predictions() -> List[PredictionSchema]:
-    prediction_items = await crud.get_all_records()
+    prediction_items = await crud.get_all()
     return [pred_to_dict(pred) for pred in prediction_items]

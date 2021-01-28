@@ -15,4 +15,4 @@ class PredictionSchema(StockOut):
     created_date: datetime
 
     class Config:
-        arbitrary_types_allowed = True
+        orm_mode = True
