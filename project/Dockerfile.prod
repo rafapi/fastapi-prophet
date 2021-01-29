@@ -37,6 +37,8 @@ RUN apt-get update \
 ## set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV ENVIRONMENT prod
+ENV TESTING 0
 
 COPY --from=builder /opt/venv /opt/venv
 
