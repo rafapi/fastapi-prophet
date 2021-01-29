@@ -84,6 +84,8 @@ jobs:
                         flake8===3.8.4 \
                         isort==5.6.4 \
                         pytest==6.2.0
+      - name: Print Env Vars
+        run: echo $DATABASE_TEST_URL
       - name: Pytest
         run: docker exec prophet-tdd python -m pytest .
       - name: Flake8
