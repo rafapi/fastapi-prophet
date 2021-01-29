@@ -1,8 +1,1 @@
-databases[postgresql]==0.4.1
-fastapi==0.62.0
-uvicorn==0.13.3
-fbprophet==0.7.1
-joblib==1.0.0
-plotly==4.14.3
-yfinance==0.1.55
-gunicorn==20.0.4
+flask
