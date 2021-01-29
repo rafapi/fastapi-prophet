@@ -1,13 +1,11 @@
 import json
 from datetime import datetime
 
-from app.api import crud
+from app.api import crud, predictions
 from app.utils import pred_to_dict
 
 
 def test_create_prediction(test_app, monkeypatch):
-    from app.api import predictions
-
     test_request_payload = {"ticker": "GOOG"}
     test_response_payload = {"id": 1, "ticker": "GOOG"}
 
