@@ -80,6 +80,10 @@ jobs:
           ENVIRONMENT: dev
           DATABASE_TEST_URL: sqlite://sqlite.db
           PORT: 8765
+      - name: Print Env Vars
+        run: |
+          echo $DATABASE_TEST_URL
+          echo $ENVIRONMENT
       - name: Pytest
         run: docker exec prophet-tdd python -m pytest .
       - name: Flake8
