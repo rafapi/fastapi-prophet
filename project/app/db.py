@@ -1,10 +1,10 @@
+import os
+
 from databases import Database
 from sqlalchemy import create_engine, MetaData
-from app.config import get_settings
 
 
-settings = get_settings()
-DATABASE_URL = settings.database_url
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 # create database schema
 metadata = MetaData()
@@ -16,4 +16,5 @@ def get_engine():
 
 
 # databases query builder
-database = Database(DATABASE_URL)
+if DATABASE_URL is not None:
+    database = Database(DATABASE_URL)
