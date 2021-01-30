@@ -1,14 +1,10 @@
-from fastapi import Depends
 from databases import Database
 from sqlalchemy import create_engine, MetaData
-from app.config import Settings, get_settings
+from app.config import get_settings
 
 
-def get_env(settings: Settings = Depends(get_settings)):
-    return settings.database_url
-
-
-DATABASE_URL = get_env()
+settings = get_settings()
+DATABASE_URL = settings.database_url
 
 # create database schema
 metadata = MetaData()
