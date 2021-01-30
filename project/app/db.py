@@ -18,3 +18,5 @@ def get_engine():
 # databases query builder
 if DATABASE_URL is not None:
     database = Database(DATABASE_URL)
+else:
+    database = None
