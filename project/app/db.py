@@ -4,10 +4,8 @@ from sqlalchemy import create_engine, MetaData
 from app.config import Settings, get_settings
 
 
-async def get_env(settings: Settings = Depends(get_settings)):
-    return {
-        "database_url": settings.database_url,
-    }
+def get_env(settings: Settings = Depends(get_settings)):
+    return settings.database_url
 
 
 DATABASE_URL = get_env()
