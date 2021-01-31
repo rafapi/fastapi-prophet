@@ -1,19 +1,20 @@
+import os
+
 from databases import Database
 from sqlalchemy import create_engine, MetaData
-from app.config import get_settings
 
-
-settings = get_settings()
-DATABASE_URL = settings.database_url
 
 # create database schema
 metadata = MetaData()
 
 
-def get_engine():
-    # create engine to communicate with the database
-    return create_engine(DATABASE_URL)
+def mk_engine(echo=False):
+    dburl = os.getenv("DATABASE_URL")
+    engine = create_engine(dburl, echo=echo)
+    return engine
 
 
-# databases query builder
-database = Database(DATABASE_URL)
+def setup_db():
+    dburl = os.getenv("DATABASE_URL")
+    database = Database(dburl)
+    return database
