@@ -19,21 +19,21 @@ def create_application() -> FastAPI:
 
 
 app = create_application()
-engine = mk_engine()
-database = setup_db()
 
 
 def create_schema():
+    engine = mk_engine()
     metadata.create_all(engine)
 
 
-@app.on_event("startup")
-async def startup():
-    log.info("Starting up...")
-    await database.connect()
+# @app.on_event("startup")
+# async def startup():
+#     log.info("Starting up...")
+#     await database.connect()
 
 
 @app.on_event("shutdown")
 async def shutdown():
     log.info("Shutting down...")
+    database = setup_db()
     await database.disconnect()
