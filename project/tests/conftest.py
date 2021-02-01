@@ -32,7 +32,7 @@ def event_loop():
     yield asyncio.get_event_loop()
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="session")
 async def db():
     mk_engine()
     db = setup_db()
