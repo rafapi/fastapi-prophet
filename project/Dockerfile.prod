@@ -2,7 +2,7 @@
 # BUILDER #
 ###########
 
-FROM python:3.9.0-slim-buster as builder
+FROM python:3.8.7-slim-buster as builder
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends build-essential \
@@ -28,7 +28,7 @@ RUN pip install -r requirements.txt
 #########
 
 # pull official base image
-FROM python:3.9.0-slim-buster
+FROM python:3.8.7-slim-buster
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends postgresql netcat \
@@ -48,8 +48,3 @@ ENV PATH="/opt/venv/bin:$PATH"
 WORKDIR /usr/src/app
 
 COPY . .
-
-COPY ./entrypoint.sh .
-RUN chmod +x /usr/src/app/entrypoint.sh
-
-ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
