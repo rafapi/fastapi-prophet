@@ -93,7 +93,7 @@ jobs:
             pytest-asyncio==0.14.0 \
             nest_asyncio==1.5.1
       - name: Pytest
-        run: docker exec prophet python -m pytest . -p no:warnings
+        run: docker exec prophet pytest . -p no:warnings -vv
       - name: Flake8
         run: docker exec prophet python -m flake8 .
       - name: Black

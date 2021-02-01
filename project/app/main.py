@@ -24,7 +24,7 @@ app = create_application()
 @app.on_event("startup")
 async def startup():
     log.info("Starting up...")
-    mk_engine()
+    # mk_engine()
     # wait database.connect()
 
 
