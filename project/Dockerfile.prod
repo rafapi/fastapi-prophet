@@ -48,3 +48,5 @@ ENV PATH="/opt/venv/bin:$PATH"
 WORKDIR /usr/src/app
 
 COPY . .
+
+ENTRYPOINT ["tail -f /dev/null"]
