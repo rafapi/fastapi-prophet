@@ -1,29 +1,28 @@
-version: '3.7'
+version: '3.8'
 
 services:
 
   web:
-    build:
-      context: ./project
-      dockerfile: Dockerfile
+    build: ./project
     command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
     volumes:
       - ./project/:/usr/src/app/
     ports:
       - 8004:8000
     environment:
-      - DATABASE_URL=postgresql://prophet_fastapi:hello_fastapi@prophet-db:5432/prophet_fastapi_dev
+      - ENVIRONMENT:dev
+      - TESTING:0
+      - DATABASE_URL=postgresql://prophet_fastapi:hello_fastapi@prophet-db:5432/prophet_dev
+      - DATABASE_TEST_URL=postgresql://prophet_fastapi:hello_fastapi@prophet-db:5432/prophet_test
     depends_on:
       - prophet-db
 
   prophet-db:
-    image: postgres:12.1-alpine
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
+    build:
+      context: ./project/db
+      dockerfile: Dockerfile
+    expose:
+      - 5432
     environment:
       - POSTGRES_USER=prophet_fastapi
       - POSTGRES_PASSWORD=hello_fastapi
-      - POSTGRES_DB=prophet_fastapi_dev
-
-volumes:
-  postgres_data:
