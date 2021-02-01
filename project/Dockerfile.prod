@@ -49,4 +49,4 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-ENTRYPOINT ["tail -f /dev/null"]
+ENTRYPOINT ["tail", "-f", "/dev/null"]
