@@ -3,7 +3,7 @@ import logging
 from fastapi import FastAPI
 
 from app.api import ping, predictions
-from app.db import metadata, mk_engine, setup_db
+from app.db import setup_db, mk_engine
 
 
 log = logging.getLogger(__name__)
@@ -21,15 +21,11 @@ def create_application() -> FastAPI:
 app = create_application()
 
 
-def create_schema():
-    engine = mk_engine()
-    metadata.create_all(engine)
-
-
-# @app.on_event("startup")
-# async def startup():
-#     log.info("Starting up...")
-#     await database.connect()
+@app.on_event("startup")
+async def startup():
+    log.info("Starting up...")
+    mk_engine()
+    # wait database.connect()
 
 
 @app.on_event("shutdown")

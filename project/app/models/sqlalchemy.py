@@ -1,7 +1,7 @@
-from sqlalchemy import Column, Integer, String, DateTime, Table
+from sqlalchemy import Column, Integer, String, DateTime, Table, MetaData
 from sqlalchemy.sql import func
-from app.db import metadata
 
+metadata = MetaData()
 
 predictions = Table(
     "predictions",

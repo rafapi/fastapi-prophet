@@ -1,19 +1,26 @@
 import os
 
 from databases import Database
-from sqlalchemy import create_engine, MetaData
-
-# create database schema
-metadata = MetaData()
+from sqlalchemy import create_engine
+from app.models.sqlalchemy import metadata
 
 
-def mk_engine(echo=False):
+def mk_engine():
     dburl = os.getenv("DATABASE_URL")
-    engine = create_engine(dburl, echo=echo)
-    return engine
+    if os.getenv("TESTING"):
+        engine = create_engine(
+            dburl, connect_args={"check_same_thread": False}
+        )
+    else:
+        engine = create_engine(dburl)
+
+    metadata.create_all(engine)
 
 
-def setup_db():
+def setup_db() -> Database:
     dburl = os.getenv("DATABASE_URL")
-    database = Database(dburl)
+    if os.getenv("TESTING"):
+        database = Database(dburl, force_rollback=True)
+    else:
+        database = Database(dburl)
     return database

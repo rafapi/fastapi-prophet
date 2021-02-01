@@ -19,3 +19,8 @@ async def get_all(db: Database):
     query = predictions.select()
     await db.connect()
     return await db.fetch_all(query=query)
+
+
+async def delete(id: int, db: Database):
+    query = predictions.delete().where(id == predictions.c.id)
+    return await db.execute(query=query)

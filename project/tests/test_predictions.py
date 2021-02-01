@@ -5,29 +5,28 @@ from app.api import crud, predictions
 from app.utils import pred_to_dict
 
 
-def test_create_prediction(test_app, monkeypatch):
+def test_create_prediction(test_app, db, monkeypatch):
     test_request_payload = {"ticker": "GOOG"}
-    test_response_payload = {"id": 1, "ticker": "GOOG"}
 
-    async def mock_post(payload):
+    async def mock_post(payload, db):
         return 1
 
-    monkeypatch.setattr(crud, "post", mock_post)
+    monkeypatch.setattr(crud, "get", mock_post)
 
-    def mock_generate_prediction(id, ticker):
-        return None
+    async def mock_generate_prediction(id, ticker):
+        response_object = {"id": 1, "ticker": "GOOG"}
+        return response_object
 
     monkeypatch.setattr(
-        predictions, "generate_prediction", mock_generate_prediction
+        predictions, "create_prediction", mock_generate_prediction
     )
 
-    response = test_app.post(
-        "/predict/",
-        data=json.dumps(test_request_payload),
-    )
+    response = test_app.post("/predict/", json.dumps(test_request_payload), db)
+
+    prediction_id = response.json()["id"]
 
     assert response.status_code == 201
-    assert response.json() == test_response_payload
+    assert response.json() == {"id": prediction_id, "ticker": "GOOG"}
 
 
 def test_create_prediction_invalid_json(test_app):
@@ -38,7 +37,7 @@ def test_create_prediction_invalid_json(test_app):
 def test_read_prediction(test_app, monkeypatch):
     test_data = {
         "id": 1,
-        "ticker": "TEST",
+        "ticker": "MSFT",
         "prediction": json.dumps(
             {
                 "07/22/2020": 212.29389088938012,
@@ -53,7 +52,7 @@ def test_read_prediction(test_app, monkeypatch):
         "created_date": datetime.utcnow().isoformat(),
     }
 
-    async def mock_get(id):
+    async def mock_get(id, db):
         return test_data
 
     monkeypatch.setattr(crud, "get", mock_get)
@@ -64,7 +63,7 @@ def test_read_prediction(test_app, monkeypatch):
 
 
 def test_read_prediction_incorrect_id(test_app, monkeypatch):
-    async def mock_get(id):
+    async def mock_get(id, db):
         return None
 
     monkeypatch.setattr(crud, "get", mock_get)
@@ -72,3 +71,16 @@ def test_read_prediction_incorrect_id(test_app, monkeypatch):
     response = test_app.get("/predict/999/")
     assert response.status_code == 404
     assert response.json()["detail"] == "Prediction not found"
+
+
+# def test_delete_prediction(test_app, db):
+#     test_request_payload = {"ticker": "GOOG"}
+
+#     response = test_app.post("/predict/", json.dumps(test_request_payload), db)
+#     prediction_id = response.json()["id"]
+
+#     response = test_app.delete(f"/predict/{prediction_id}")
+
+#     print(response)
+#     assert response.status_code == 307
+#     assert response.json() == "GOOG"
