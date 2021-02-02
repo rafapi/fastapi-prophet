@@ -21,9 +21,10 @@ def get_settings_override():
 @pytest.fixture(autouse=True, scope="module")
 def test_app():
     settings = get_settings()
-    settings.testing = True
-    settings.environment = "test"
-    settings.database_url = os.getenv("DATABASE_TEST_URL")
+    if settings.database_url is None:
+        settings.testing = True
+        settings.environment = "test"
+        settings.database_url = os.getenv("DATABASE_TEST_URL")
     app = create_application()
     with TestClient(app) as test_client:
         yield test_client
