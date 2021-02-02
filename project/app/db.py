@@ -4,8 +4,10 @@ from app.models.sqlalchemy import metadata
 from app.config import get_settings
 
 
+settings = get_settings()
+
+
 def mk_engine():
-    settings = get_settings()
     dburl = settings.database_url
     if settings.testing:
         engine = create_engine(
@@ -18,7 +20,6 @@ def mk_engine():
 
 
 def setup_db() -> Database:
-    settings = get_settings()
     dburl = settings.database_url
     if settings.testing:
         database = Database(dburl, force_rollback=True)
