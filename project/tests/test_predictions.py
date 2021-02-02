@@ -18,9 +18,6 @@ def test_db_prod_url(test_app):
 
 
 def test_env_vars(test_app):
-    settings = get_settings()
-    assert settings.database_url == os.environ.get("DATABASE_TEST_URL")
-    assert settings.database_url == os.environ.get("DATABASE_URL")
     assert os.environ.get("DATABASE_TEST_URL") == os.environ.get(
         "DATABASE_URL"
     )
