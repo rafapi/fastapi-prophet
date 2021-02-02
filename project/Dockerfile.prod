@@ -65,6 +65,6 @@ RUN chown -R app:app $HOME
 USER app
 
 RUN pip install --upgrade pip
-RUN pip install "uvicorn[standard]==0.13.1"
+RUN pip install --user "uvicorn[standard]==0.13.1"
 
 CMD gunicorn --bind 0.0.0.0:$PORT app.main:app -k uvicorn.workers.UvicornWorker
