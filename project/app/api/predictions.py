@@ -1,13 +1,13 @@
 from typing import List
 
+from databases import Database
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Path
+
 from app.api import crud
-from app.models.pydantic import StockIn, StockOut, PredictionSchema
+from app.db import setup_db
+from app.models.pydantic import PredictionSchema, StockIn, StockOut
 from app.prediction_engine import generate_prediction
 from app.utils import pred_to_dict
-from app.db import setup_db
-from databases import Database
-from fastapi import APIRouter, HTTPException, BackgroundTasks, Path, Depends
-
 
 router = APIRouter()
 
@@ -20,9 +20,7 @@ async def create_prediction(
 ):
     prediction_id = await crud.post(payload, db)
 
-    background_tasks.add_task(
-        generate_prediction, prediction_id, payload.ticker, db
-    )
+    background_tasks.add_task(generate_prediction, prediction_id, payload.ticker, db)
 
     response_object = {"id": prediction_id, "ticker": payload.ticker}
 

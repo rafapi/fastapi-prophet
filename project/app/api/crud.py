@@ -1,4 +1,5 @@
 from databases import Database
+
 from app.models.pydantic import StockIn
 from app.models.sqlalchemy import predictions
 

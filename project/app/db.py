@@ -1,8 +1,8 @@
 from databases import Database
 from sqlalchemy import create_engine
-from app.models.sqlalchemy import metadata
-from app.config import get_settings
 
+from app.config import get_settings
+from app.models.sqlalchemy import metadata
 
 settings = get_settings()
 
@@ -10,9 +10,7 @@ settings = get_settings()
 def mk_engine():
     dburl = settings.database_url
     if settings.testing:
-        engine = create_engine(
-            dburl, connect_args={"check_same_thread": False}
-        )
+        engine = create_engine(dburl, connect_args={"check_same_thread": False})
     else:
         engine = create_engine(dburl)
 
