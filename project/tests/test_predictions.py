@@ -12,17 +12,6 @@ def test_db_test_url(test_app):
     assert settings.database_url == os.environ.get("DATABASE_TEST_URL")
 
 
-def test_db_prod_url(test_app):
-    settings = get_settings()
-    assert settings.database_url == os.environ.get("DATABASE_URL")
-
-
-def test_env_vars(test_app):
-    assert os.environ.get("DATABASE_TEST_URL") == os.environ.get(
-        "DATABASE_URL"
-    )
-
-
 def test_create_prediction(test_app, db, monkeypatch):
     test_request_payload = {"ticker": "GOOG"}
 
