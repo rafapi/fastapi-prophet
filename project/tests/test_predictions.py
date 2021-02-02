@@ -4,12 +4,16 @@ from datetime import datetime
 
 from app.api import crud, predictions
 from app.utils import pred_to_dict
+from app.config import get_settings
 
 
 def test_env_vars():
     assert os.environ.get("DATABASE_TEST_URL") == os.environ.get(
         "DATABASE_URL"
     )
+    settings = get_settings()
+    assert settings.database_url == os.environ.get("DATABASE_TEST_URL")
+    assert settings.database_url == os.environ.get("DATABASE_URL")
 
 
 def test_create_prediction(test_app, db, monkeypatch):
