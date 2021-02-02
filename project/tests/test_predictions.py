@@ -7,6 +7,16 @@ from app.utils import pred_to_dict
 from app.config import get_settings
 
 
+def test_db_test_url(test_app):
+    settings = get_settings()
+    assert settings.database_url == os.environ.get("DATABASE_TEST_URL")
+
+
+def test_db_prod_url(test_app):
+    settings = get_settings()
+    assert settings.database_url == os.environ.get("DATABASE_URL")
+
+
 def test_env_vars(test_app):
     settings = get_settings()
     assert settings.database_url == os.environ.get("DATABASE_TEST_URL")
