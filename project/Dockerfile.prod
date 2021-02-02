@@ -57,14 +57,14 @@ COPY --from=builder /opt/venv /opt/venv
 # Make sure we use the virtualenv:
 ENV PATH="/opt/venv/bin:$PATH"
 
+RUN pip install --upgrade pip
+RUN pip install --user "uvicorn[standard]==0.13.1"
+
 COPY . .
 
 # chown all the files to the app user
 RUN chown -R app:app $HOME
 
 USER app
-
-RUN pip install --upgrade pip
-RUN pip install --user "uvicorn[standard]==0.13.1"
 
 CMD gunicorn --bind 0.0.0.0:$PORT app.main:app -k uvicorn.workers.UvicornWorker
