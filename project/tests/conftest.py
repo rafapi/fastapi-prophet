@@ -2,14 +2,14 @@ import os
 
 # import asyncio
 import pytest
+from fastapi.testclient import TestClient
+
+from app.config import Settings, get_settings
+from app.db import mk_engine, setup_db
+from app.main import create_application
 
 # import nest_asyncio
 
-from fastapi.testclient import TestClient
-
-from app.db import mk_engine, setup_db
-from app.config import Settings, get_settings
-from app.main import create_application
 
 # nest_asyncio.apply()
 

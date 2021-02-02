@@ -1,10 +1,10 @@
-import os
 import json
+import os
 from datetime import datetime
 
 from app.api import crud
-from app.utils import pred_to_dict
 from app.config import get_settings
+from app.utils import pred_to_dict
 
 
 def test_db_test_url(test_app):
