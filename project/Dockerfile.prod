@@ -30,17 +30,9 @@ RUN pip install -r requirements.txt
 # pull official base image
 FROM python:3.8.7-slim-buster
 
-# create directory for the app user
-RUN mkdir -p /home/app
-
-# create the app user
-RUN addgroup --system app && adduser --system --group app
-
-# create the appropriate directories
-ENV HOME=/home/app
-ENV APP_HOME=/home/app/web
-RUN mkdir $APP_HOME
-WORKDIR $APP_HOME
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends postgresql netcat \
+  && apt-get clean
 
 ## set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -48,24 +40,16 @@ ENV PYTHONUNBUFFERED 1
 ENV ENVIRONMENT prod
 ENV TESTING 0
 
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends postgresql netcat \
-  && apt-get clean
-
 COPY --from=builder /opt/venv /opt/venv
 
-# Make sure we use the virtualenv:
+# activate the venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-COPY . .
-
-# chown all the files to the app user
-RUN chown -R app:app $HOME
-
-USER app
-
-RUN export PIP_USER=false
 RUN pip install --upgrade pip
 RUN pip install "uvicorn[standard]==0.13.1"
+
+WORKDIR /usr/src/app
+
+COPY . .
 
 CMD gunicorn --bind 0.0.0.0:$PORT app.main:app -k uvicorn.workers.UvicornWorker
