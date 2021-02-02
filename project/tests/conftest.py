@@ -20,7 +20,7 @@ def get_settings_override():
     )
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="module", autouse=True)
 def test_app():
     app = create_application()
     app.dependency_overrides[get_settings] = get_settings_override
@@ -33,7 +33,7 @@ def test_app():
 #     yield asyncio.get_event_loop()
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
 def db():
     mk_engine()
     db = setup_db()
