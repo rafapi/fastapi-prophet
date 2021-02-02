@@ -92,7 +92,10 @@ jobs:
             isort==5.6.4 \
             pytest==6.2.0 \
             pytest-asyncio==0.14.0 \
-            nest_asyncio==1.5.1
+            nest_asyncio==1.5.1 \
+            aiosqlite==0.16.1 \
+            databases[sqlite]==0.4.1
+
       - name: Pytest
         run: docker exec prophet pytest . -p no:warnings -vv
       - name: Flake8
