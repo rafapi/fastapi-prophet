@@ -3,6 +3,6 @@ def test_ping(test_app):
     assert response.status_code == 200
     assert response.json() == {
         "ping": "pong!",
-        "environment": "dev",
+        "environment": "test",
         "testing": True,
     }
