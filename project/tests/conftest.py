@@ -1,8 +1,9 @@
 import os
 
-import asyncio
+# import asyncio
 import pytest
-import nest_asyncio
+
+# import nest_asyncio
 
 from fastapi.testclient import TestClient
 
@@ -10,7 +11,7 @@ from app.db import mk_engine, setup_db
 from app.config import Settings, get_settings
 from app.main import create_application
 
-nest_asyncio.apply()
+# nest_asyncio.apply()
 
 
 def get_settings_override():
@@ -27,13 +28,13 @@ def test_app():
         yield test_client
 
 
-@pytest.fixture(scope="session")
-def event_loop():
-    yield asyncio.get_event_loop()
+# @pytest.fixture(scope="session")
+# def event_loop():
+#     yield asyncio.get_event_loop()
 
 
 @pytest.fixture(scope="session")
-async def db():
+def db():
     mk_engine()
     db = setup_db()
     try:
