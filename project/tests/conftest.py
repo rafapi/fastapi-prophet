@@ -20,7 +20,7 @@ def get_settings_override():
     )
 
 
-@pytest.fixture(scope="module", autouse=True)
+@pytest.fixture(scope="module")
 def test_app():
     app = create_application()
     app.dependency_overrides[get_settings] = get_settings_override
@@ -34,7 +34,7 @@ def test_app():
 
 
 @pytest.fixture(scope="module")
-def db():
+def db(test_app):
     mk_engine()
     db = setup_db()
     try:
