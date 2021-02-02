@@ -16,9 +16,10 @@ def test_create_prediction(test_app, db, monkeypatch):
     test_request_payload = {"ticker": "GOOG"}
 
     async def mock_post(payload, db):
+        await db.connect()
         return 1
 
-    monkeypatch.setattr(crud, "get", mock_post)
+    monkeypatch.setattr(crud, "post", mock_post)
 
     async def mock_generate_prediction(id, ticker):
         response_object = {"id": 1, "ticker": "GOOG"}

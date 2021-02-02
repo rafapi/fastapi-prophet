@@ -18,7 +18,7 @@ def get_settings_override():
     return Settings(testing=1, database_url=os.getenv("DATABASE_TEST_URL"))
 
 
-@pytest.fixture(autouse=True, scope="module")
+@pytest.fixture(scope="module")
 def test_app():
     settings = get_settings()
     if settings.database_url is None:
