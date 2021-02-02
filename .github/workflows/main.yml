@@ -81,7 +81,7 @@ jobs:
         run: |
           docker exec \
             prophet \
-            python -c "import os; print('PDATABASE_TEST_URLATH: ' + os.getenv('DATABASE_TEST_URL'))" \
+            python -c "import os; print('DATABASE_TEST_URL: ' + os.getenv('DATABASE_TEST_URL'))" \
             python -c "import os; print('DATABASE_URL: ' + os.getenv('DATABASE_URL'))"
       - name: Install requirements
         run: |

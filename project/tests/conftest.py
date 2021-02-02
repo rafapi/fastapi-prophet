@@ -15,12 +15,10 @@ from app.main import create_application
 
 
 def get_settings_override():
-    return Settings(
-        testing=1, database_url=os.environ.get("DATABASE_TEST_URL")
-    )
+    return Settings(testing=1, database_url=os.getenv("DATABASE_TEST_URL"))
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(autouse=True, scope="session")
 def test_app():
     app = create_application()
     app.dependency_overrides[get_settings] = get_settings_override
@@ -34,7 +32,7 @@ def test_app():
 
 
 @pytest.fixture(scope="module")
-def db(test_app):
+def db():
     mk_engine()
     db = setup_db()
     try:

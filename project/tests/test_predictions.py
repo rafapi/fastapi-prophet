@@ -1,8 +1,15 @@
+import os
 import json
 from datetime import datetime
 
 from app.api import crud, predictions
 from app.utils import pred_to_dict
+
+
+def test_env_vars():
+    assert os.environ.get("DATABASE_TEST_URL") == os.environ.get(
+        "DATABASE_URL"
+    )
 
 
 def test_create_prediction(test_app, db, monkeypatch):
