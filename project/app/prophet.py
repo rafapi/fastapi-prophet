@@ -7,6 +7,8 @@ import yfinance as yf
 from fbprophet import Prophet
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent
+TRAINED_DIR = Path(BASE_DIR) / "trained"
+PLOTS_DIR = Path(BASE_DIR) / "plots"
 TODAY = datetime.date.today()
 
 
@@ -25,11 +27,11 @@ def train(ticker="MSFT"):
     model = Prophet()
     model.fit(df_forecast)
 
-    joblib.dump(model, Path(BASE_DIR).joinpath(f"{ticker}.joblib"))
+    joblib.dump(model, TRAINED_DIR / f"{ticker}.joblib")
 
 
 async def predict(ticker="MSFT", days=7):
-    model_file = Path(BASE_DIR).joinpath(f"{ticker}.joblib")
+    model_file = TRAINED_DIR / f"{ticker}.joblib"
     if not model_file.exists():
         return False
 
@@ -45,8 +47,10 @@ async def predict(ticker="MSFT", days=7):
 
     forecast = model.predict(df)
 
-    model.plot(forecast).savefig(f"{ticker}_plot.png")
-    model.plot_components(forecast).savefig(f"{ticker}_plot_components.png")
+    model.plot(forecast).savefig(PLOTS_DIR / f"{ticker}_plot.png")
+    model.plot_components(forecast).savefig(
+        PLOTS_DIR / f"{ticker}_plot_components.png"
+    )
 
     return forecast.tail(days).to_dict("records")
 
