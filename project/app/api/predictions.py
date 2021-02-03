@@ -1,3 +1,5 @@
+import os
+import pathlib
 from typing import List
 
 from databases import Database
@@ -12,15 +14,27 @@ from app.utils import pred_to_dict
 router = APIRouter()
 
 
+BASE_DIR = pathlib.Path(__file__).resolve(strict=True).parent.parent
+TRAINED_DIR = pathlib.Path(BASE_DIR) / "trained"
+
+
 @router.post("/", response_model=StockOut, status_code=201)
 async def create_prediction(
     payload: StockIn,
     background_tasks: BackgroundTasks,
     db: Database = Depends(setup_db),
 ):
+    model_file = TRAINED_DIR / f"{payload.ticker}.joblib"
+    for entry in os.listdir(TRAINED_DIR):
+        if os.path.isfile(os.path.join(TRAINED_DIR, entry)):
+            print(entry)
+    if not model_file.exists():
+        raise HTTPException(status_code=404, detail="No train model found")
     prediction_id = await crud.post(payload, db)
 
-    background_tasks.add_task(generate_prediction, prediction_id, payload.ticker, db)
+    background_tasks.add_task(
+        generate_prediction, prediction_id, payload.ticker, db
+    )
 
     response_object = {"id": prediction_id, "ticker": payload.ticker}
 
@@ -57,4 +71,5 @@ async def delete_prediction(
         raise HTTPException(status_code=404, detail="Prediction not found")
 
     await crud.delete(id, db)
+
     return pred_to_dict(prediction)
