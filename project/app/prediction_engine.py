@@ -1,13 +1,14 @@
 import json
 
 from app.models.pydantic import StockIn
+from app.db import database
 from app.models.sqlalchemy import predictions
 from app.prophet import convert, predict
 
 from fastapi import HTTPException
 
 
-async def generate_prediction(id: int, ticker: StockIn, db):
+async def generate_prediction(id: int, ticker: StockIn):
     prediction_list = await predict(ticker)
     if not prediction_list:
         raise HTTPException(status_code=404, detail="No train model found")
@@ -18,4 +19,4 @@ async def generate_prediction(id: int, ticker: StockIn, db):
         .where(id == predictions.c.id)
         .values(ticker=ticker, prediction=prediction_data)
     )
-    return await db.execute(query=query)
+    return await database.execute(query=query)

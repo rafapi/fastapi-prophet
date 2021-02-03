@@ -1,27 +1,23 @@
-from databases import Database
-
 from app.models.pydantic import StockIn
 from app.models.sqlalchemy import predictions
+from app.db import database
 
 
-async def post(payload: StockIn, db: Database):
+async def post(payload: StockIn):
     query = predictions.insert().values(ticker=payload.ticker)
-    await db.connect()
-    return await db.execute(query=query)
+    return await database.execute(query=query)
 
 
-async def get(id: int, db: Database):
+async def get(id: int):
     query = predictions.select().where(id == predictions.c.id)
-    await db.connect()
-    return await db.fetch_one(query=query)
+    return await database.fetch_one(query=query)
 
 
-async def get_all(db: Database):
+async def get_all():
     query = predictions.select()
-    await db.connect()
-    return await db.fetch_all(query=query)
+    return await database.fetch_all(query=query)
 
 
-async def delete(id: int, db: Database):
+async def delete(id: int):
     query = predictions.delete().where(id == predictions.c.id)
-    return await db.execute(query=query)
+    return await database.execute(query=query)
