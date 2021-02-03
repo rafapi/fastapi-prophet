@@ -1,5 +1,6 @@
 import json
 import os
+import pytest
 from datetime import datetime
 
 from app.api import crud
@@ -12,10 +13,11 @@ def test_db_test_url(test_app):
     assert settings.database_url == os.environ.get("DATABASE_TEST_URL")
 
 
+@pytest.mark.asyncio
 def test_create_prediction(test_app, db):
     test_request_payload = {"ticker": "GOOG"}
 
-    response = test_app.post("/predict/", json.dumps(test_request_payload), db)
+    response = test_app.post("/predict/", json.dumps(test_request_payload))
 
     prediction_id = response.json()["id"]
 
@@ -46,7 +48,7 @@ def test_read_prediction(test_app, monkeypatch):
         "created_date": datetime.utcnow().isoformat(),
     }
 
-    async def mock_get(id, db):
+    async def mock_get(id):
         return test_data
 
     monkeypatch.setattr(crud, "get", mock_get)
@@ -62,11 +64,12 @@ def test_read_prediction_incorrect_id(test_app):
     assert response.json()["detail"] == "Prediction not found"
 
 
+@pytest.mark.asyncio
 def test_delete_prediction(test_app, db):
     test_request_payload = {"ticker": "GOOG"}
 
     post_response = test_app.post(
-        "/predict/", json.dumps(test_request_payload), db
+        "/predict/", json.dumps(test_request_payload)
     )
     prediction_id = post_response.json()["id"]
 
