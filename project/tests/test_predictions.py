@@ -12,29 +12,15 @@ def test_db_test_url(test_app):
     assert settings.database_url == os.environ.get("DATABASE_TEST_URL")
 
 
-# def test_create_prediction(test_app, db, monkeypatch):
-#     test_request_payload = {"ticker": "GOOG"}
+def test_create_prediction(test_app, db):
+    test_request_payload = {"ticker": "GOOG"}
 
-#     async def mock_post(payload, db):
-#         await db.connect()
-#         return 1
+    response = test_app.post("/predict/", json.dumps(test_request_payload), db)
 
-#     monkeypatch.setattr(crud, "post", mock_post)
+    prediction_id = response.json()["id"]
 
-#     # async def mock_generate_prediction(id, ticker):
-#     #     response_object = {"id": 1, "ticker": "GOOG"}
-#     #     return response_object
-
-#     # monkeypatch.setattr(
-#     #     predictions, "create_prediction", mock_generate_prediction
-#     # )
-
-#     response = test_app.post("/predict/", json.dumps(test_request_payload), db)
-
-#     prediction_id = response.json()["id"]
-
-#     assert response.status_code == 201
-#     assert response.json() == {"id": prediction_id, "ticker": "GOOG"}
+    assert response.status_code == 201
+    assert response.json() == {"id": prediction_id, "ticker": "GOOG"}
 
 
 def test_create_prediction_invalid_json(test_app):
@@ -70,25 +56,20 @@ def test_read_prediction(test_app, monkeypatch):
     assert response.json() == pred_to_dict(test_data)
 
 
-def test_read_prediction_incorrect_id(test_app, monkeypatch):
-    async def mock_get(id, db):
-        return None
-
-    monkeypatch.setattr(crud, "get", mock_get)
-
+def test_read_prediction_incorrect_id(test_app):
     response = test_app.get("/predict/999/")
     assert response.status_code == 404
     assert response.json()["detail"] == "Prediction not found"
 
 
-# def test_delete_prediction(test_app, db):
-#     test_request_payload = {"ticker": "GOOG"}
+def test_delete_prediction(test_app, db):
+    test_request_payload = {"ticker": "GOOG"}
 
-#     response = test_app.post("/predict/", json.dumps(test_request_payload), db)
-#     prediction_id = response.json()["id"]
+    post_response = test_app.post(
+        "/predict/", json.dumps(test_request_payload), db
+    )
+    prediction_id = post_response.json()["id"]
 
-#     response = test_app.delete(f"/predict/{prediction_id}")
+    del_response = test_app.delete(f"/predict/{prediction_id}/")
 
-#     print(response)
-#     assert response.status_code == 307
-#     assert response.json() == "GOOG"
+    assert del_response.json()["id"] == prediction_id
