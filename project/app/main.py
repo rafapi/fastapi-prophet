@@ -3,7 +3,8 @@ import logging
 from fastapi import FastAPI
 
 from app.api import ping, predictions, train
-from app.db import mk_engine, setup_db
+from app.db import engine, database
+from app.models.sqlalchemy import metadata
 
 log = logging.getLogger(__name__)
 
@@ -19,17 +20,16 @@ def create_application() -> FastAPI:
 
 
 app = create_application()
+metadata.create_all(engine)
 
 
 @app.on_event("startup")
 async def startup():
     log.info("Starting up...")
-    mk_engine()
-    # wait database.connect()
+    await database.connect()
 
 
 @app.on_event("shutdown")
 async def shutdown():
     log.info("Shutting down...")
-    database = setup_db()
     await database.disconnect()
