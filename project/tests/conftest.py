@@ -41,5 +41,5 @@ def db(test_app):
     db = setup_db()
     try:
         yield db
-    finally:
-        db.disconnect()
+    except Exception as e:
+        yield e
