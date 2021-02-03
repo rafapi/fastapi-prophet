@@ -1,21 +1,23 @@
 import os
 
-# import asyncio
+import asyncio
 import pytest
 from fastapi.testclient import TestClient
 
-from app.config import Settings, get_settings
-from app.db import mk_engine, setup_db
+from app.config import get_settings
+
+from app.db import database
 from app.main import create_application
 
-# import nest_asyncio
+
+settings = get_settings()
 
 
-# nest_asyncio.apply()
-
-
-def get_settings_override():
-    return Settings(testing=1, database_url=os.getenv("DATABASE_TEST_URL"))
+@pytest.fixture(scope="module")
+def event_loop():
+    loop = asyncio.get_event_loop()
+    yield loop
+    loop.close()
 
 
 @pytest.fixture(scope="module")
@@ -30,16 +32,8 @@ def test_app():
         yield test_client
 
 
-# @pytest.fixture(scope="session")
-# def event_loop():
-#     yield asyncio.get_event_loop()
-
-
 @pytest.fixture(scope="module")
-def db(test_app):
-    mk_engine()
-    db = setup_db()
-    try:
-        yield db
-    except Exception as e:
-        yield e
+async def db():
+    await database.connect()
+    yield
+    await database.disconnect()
