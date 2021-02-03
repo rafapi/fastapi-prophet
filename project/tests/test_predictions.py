@@ -62,14 +62,14 @@ def test_read_prediction_incorrect_id(test_app):
     assert response.json()["detail"] == "Prediction not found"
 
 
-def test_delete_prediction(test_app, db):
-    test_request_payload = {"ticker": "GOOG"}
-
-    post_response = test_app.post(
-        "/predict/", json.dumps(test_request_payload), db
-    )
-    prediction_id = post_response.json()["id"]
-
-    del_response = test_app.delete(f"/predict/{prediction_id}/")
-
-    assert del_response.json()["id"] == prediction_id
+# def test_delete_prediction(test_app, db):
+#     test_request_payload = {"ticker": "GOOG"}
+# 
+#     post_response = test_app.post(
+#         "/predict/", json.dumps(test_request_payload), db
+#     )
+#     prediction_id = post_response.json()["id"]
+# 
+#     del_response = test_app.delete(f"/predict/{prediction_id}/")
+# 
+#     assert del_response.json()["id"] == prediction_id
