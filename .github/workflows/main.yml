@@ -81,9 +81,9 @@ jobs:
             ${{ env.IMAGE }}-final:latest
 
       - name: list contents
-        run: ls .
+        run: ls project
       - name: Install requirements
-        run: docker exec prophet pip install -r requirements-dev.in
+        run: docker exec prophet pip install -r project/requirements-dev.in
       - name: Pytest
         run: docker exec prophet pytest . -p no:warnings -vv
       - name: Flake8
