@@ -46,11 +46,14 @@ COPY --from=builder /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
 RUN pip install --upgrade pip
-RUN pip install "gunicorn==20.0.4" "databases[sqlite]==0.4.1"
 RUN pip install "uvicorn[standard]==0.13.1"
+RUN pip install "gunicorn==20.0.4" "databases[sqlite]==0.4.1"
 
 WORKDIR /usr/src/app
 
 COPY . .
 
-CMD gunicorn --bind 0.0.0.0:$PORT app.main:app -k uvicorn.workers.UvicornWorker
+COPY ./start.sh .
+RUN chmod +x /usr/src/app/start.sh
+
+CMD ["/usr/src/app/start.sh"]
