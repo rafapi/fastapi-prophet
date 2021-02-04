@@ -19,8 +19,8 @@ def create_application() -> FastAPI:
     return application
 
 
-app = create_application()
 metadata.create_all(engine)
+app = create_application()
 
 
 @app.on_event("startup")
