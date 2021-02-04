@@ -45,6 +45,8 @@ COPY --from=builder /opt/venv /opt/venv
 # activate the venv
 ENV PATH="/opt/venv/bin:$PATH"
 
+RUN pip install --upgrade pip
+
 WORKDIR /usr/src/app
 
 COPY . .
