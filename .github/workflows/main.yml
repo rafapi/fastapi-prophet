@@ -1,6 +1,8 @@
 name: Continuous Integration and Delivery
 
-on: [push]
+on:
+  push:
+    branches: [master]
 
 env:
   IMAGE: docker.pkg.github.com/$(echo $GITHUB_REPOSITORY | tr '[A-Z]' '[a-z]')/web-prophet
@@ -9,7 +11,7 @@ jobs:
 
   build:
     name: Build Docker Image
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
       - name: Checkout master
         uses: actions/checkout@v2.3.4
@@ -41,7 +43,7 @@ jobs:
 
   test:
     name: Test Docker Image
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     needs: build
     steps:
       - name: Checkout master
