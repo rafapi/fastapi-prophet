@@ -85,8 +85,7 @@ jobs:
           python-version: 3.8
       - name: Install requirements
         run: |
-          pip install --upgrade pip \
-          if [ -f ./project/requirements-dev.in ]; then pip install -f ./project/requirements-dev.in; fi
+          pip install --upgrade pip && pip install -f ./project/requirements-dev.in
       - name: Pytest
         run: docker exec prophet pytest . -p no:warnings -vv
       - name: Flake8
