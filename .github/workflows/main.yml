@@ -22,7 +22,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: $(echo $GITHUB_REPOSITORY)
+          repository: rafapi/fastapi-prophet
           tag_with_ref: true
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
