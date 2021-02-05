@@ -16,7 +16,7 @@ jobs:
       - name: Checkout master
         uses: actions/checkout@v2
       - name: Build and Push to Github Packages
-        uses: docker/build-push-action@v1
+        uses: docker/build-push-action@v2
         with:
           context: .
           file: ./project/Dockerfile.prod
