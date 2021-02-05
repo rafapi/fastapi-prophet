@@ -26,3 +26,16 @@ services:
     environment:
       - POSTGRES_USER=prophet_fastapi
       - POSTGRES_PASSWORD=hello_fastapi
+
+  test:
+    build:
+      context: ./project
+      dockerfile: ./Dockerfile.prod
+    command: gunicorn --bind 0.0.0.0:8000 app.main:app -k uvicorn.workers.UvicornWorker
+    ports:
+      - 8004:8000
+    environment:
+      - PORT:8765
+      - ENVIRONMENT:dev
+      - TESTING:1
+      - DATABASE_URL=sqlite:///sqlite.db
