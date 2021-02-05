@@ -18,12 +18,10 @@ jobs:
       - name: Build and Push to Github Packages
         uses: docker/build-push-action@v1
         with:
-          dockerfile: ./project/Dockerfile.prod
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          registry: docker.pkg.github.com
-          repository: ${{ github.repository }}/final
-          tags: latest, ${{ github.run_number }}
+          context: .
+          file: ./project/Dockerfile.prod
+          push: true
+          tags: web-app:latest
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
