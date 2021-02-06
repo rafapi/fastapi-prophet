@@ -72,7 +72,8 @@ jobs:
             ${{ env.IMAGE }}:latest
             
       - name: Install requirements
-        run: docker exec prophet pip install -r project/requirements-dev.in
+        run: docker exec prophet ls .
+#         run: docker exec prophet pip install -r project/requirements-dev.in
       
       - name: Pytest
         run: docker exec prophet pytest . -p no:warnings -vv
