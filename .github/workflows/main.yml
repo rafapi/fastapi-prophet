@@ -10,40 +10,40 @@ env:
 
 jobs:
 
-  build:
-    name: Build Docker Image
-    runs-on: ubuntu-18.04
-    steps:
-      - name: Checkout master
-        uses: actions/checkout@v2
+#   build:
+#     name: Build Docker Image
+#     runs-on: ubuntu-18.04
+#     steps:
+#       - name: Checkout master
+#         uses: actions/checkout@v2
 
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v1
+#       - name: Set up Docker Buildx
+#         id: buildx
+#         uses: docker/setup-buildx-action@v1
         
-      - name: Login to Registry
-        uses: docker/login-action@v1
-        with:
-          # registry: docker.pkg.github.com
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.CR_PAT }}
+#       - name: Login to Registry
+#         uses: docker/login-action@v1
+#         with:
+#           # registry: docker.pkg.github.com
+#           registry: ghcr.io
+#           username: ${{ github.repository_owner }}
+#           password: ${{ secrets.CR_PAT }}
 
-      - name: Build and Push to GhCR
-        id: docker_build
-        uses: docker/build-push-action@v2
-        with:
-          context: ./project
-          file: ./project/Dockerfile.prod
-          push: true
-          tags: ${{ env.IMAGE }}:latest
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+#       - name: Build and Push to GhCR
+#         id: docker_build
+#         uses: docker/build-push-action@v2
+#         with:
+#           context: ./project
+#           file: ./project/Dockerfile.prod
+#           push: true
+#           tags: ${{ env.IMAGE }}:latest
+#       - name: Image digest
+#         run: echo ${{ steps.docker_build.outputs.digest }}
     
   test:
     name: Test Docker Image
     runs-on: ubuntu-18.04
-    needs: build
+#     needs: build
     steps:
       - name: Checkout master
         uses: actions/checkout@v2
@@ -70,6 +70,22 @@ jobs:
             -e DATABASE_TEST_URL=sqlite:///sqlite.db \
             -p 5003:8765 \
             ${{ env.IMAGE }}:latest
+            
+      - name: Install requirements
+        run: docker exec prophet pip install -r project/requirements-dev.in
+      
+      - name: Pytest
+        run: docker exec prophet pytest . -p no:warnings -vv
+        
+      - name: Flake8
+        run: docker exec prophet python -m flake8 .
+      
+      - name: Black
+        run: docker exec prophet python -m black . --check
+      
+      - name: isort
+        run: docker exec prophet python -m isort . --check-only
+
 
 #   test:
 #     name: Test Docker Image
