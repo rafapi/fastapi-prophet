@@ -70,6 +70,7 @@ jobs:
             -e DATABASE_TEST_URL=sqlite:///sqlite.db \
             -p 5003:8765 \
             ${{ env.IMAGE }}:latest
+          docker logs ${{ job.container.id }}
 
       - name: Dump job context
         env:
