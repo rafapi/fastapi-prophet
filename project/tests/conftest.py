@@ -10,9 +10,6 @@ from app.db import database
 from app.main import create_application
 
 
-settings = get_settings()
-
-
 @pytest.fixture(scope="module")
 def event_loop():
     loop = asyncio.get_event_loop()
