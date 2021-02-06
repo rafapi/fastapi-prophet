@@ -71,6 +71,11 @@ jobs:
             -p 5003:8765 \
             ${{ env.IMAGE }}:latest
 
+      - name: Dump job context
+        env:
+          JOB_CONTEXT: ${{ toJSON(job) }}
+        run: echo "$JOB_CONTEXT
+
       - name: Install requirements
 #         run: docker exec prophet pip install black
         run: |
