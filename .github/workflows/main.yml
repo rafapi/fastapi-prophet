@@ -74,7 +74,8 @@ jobs:
       - name: Install requirements
 #         run: docker exec prophet pip install black
         run: |
-          docker exec prophet pip list
+          docker logs ${{ job.container.id }}
+#          docker exec prophet pip list
 #         run: docker exec prophet pip install -r project/requirements-dev.in
 
       - name: Pytest
