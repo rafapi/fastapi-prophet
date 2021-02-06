@@ -70,17 +70,11 @@ jobs:
             -e DATABASE_TEST_URL=sqlite:///sqlite.db \
             -p 5003:8765 \
             ${{ env.IMAGE }}:latest
-          docker logs ${{ job.container.id }}
-
-      - name: Dump job context
-        env:
-          JOB_CONTEXT: ${{ toJSON(job) }}
-        run: echo "$JOB_CONTEXT
 
       - name: Install requirements
 #         run: docker exec prophet pip install black
         run: |
-          docker logs ${{ job.container.id }}
+          docker logs
 #          docker exec prophet pip list
 #         run: docker exec prophet pip install -r project/requirements-dev.in
 
