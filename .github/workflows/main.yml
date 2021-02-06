@@ -72,7 +72,8 @@ jobs:
             ${{ env.IMAGE }}:latest
 
       - name: Install requirements
-        run: docker exec prophet pip install black
+        run: |
+          docker exec prophet pip install black || true
       - name: Print logs
         run: |
           docker logs prophet
