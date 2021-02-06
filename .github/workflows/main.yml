@@ -72,7 +72,7 @@ jobs:
             ${{ env.IMAGE }}:latest
             
       - name: Install requirements
-        run: docker exec prophet python -m pip install black
+        run: docker exec prophet pip3 install black
 #         run: docker exec prophet ls .
 #         run: docker exec prophet pip install -r project/requirements-dev.in
       
