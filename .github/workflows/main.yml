@@ -74,7 +74,7 @@ jobs:
       - name: Install requirements
 #         run: docker exec prophet pip install black
         run: |
-          docker logs
+          docker logs prophet
 #          docker exec prophet pip list
 #         run: docker exec prophet pip install -r project/requirements-dev.in
 
