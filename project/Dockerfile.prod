@@ -10,8 +10,9 @@ RUN apt-get update \
 
 WORKDIR /usr/src/app
 
+# create venv
 RUN python -m venv /opt/venv
-# Make sure we use the virtualenv:
+# activate it
 ENV PATH="/opt/venv/bin:$PATH"
 
 RUN pip install --upgrade pip && pip install pip-tools
