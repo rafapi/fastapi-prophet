@@ -74,13 +74,13 @@ jobs:
 
       - name: Install requirements
         run: |
-          docker exec prophet pip install -r project/requirements-dev.in
+          docker exec prophet ls .
+          docker exec prophet pip install -r ./requirements-dev.in
 #          docker exec prophet pip install black || true
       - name: Print logs
         run: |
           docker logs prophet
-#         run: docker exec prophet pip install -r project/requirements-dev.in
-
+          
       - name: Pytest
         run: docker exec prophet pytest . -p no:warnings -vv
 
