@@ -1,6 +1,6 @@
 import json
 import os
-import pytest
+
 from datetime import datetime
 
 from app.api import crud
@@ -13,7 +13,6 @@ def test_db_test_url(test_app):
     assert settings.database_url == os.environ.get("DATABASE_TEST_URL")
 
 
-@pytest.mark.asyncio
 def test_create_prediction(test_app, db):
     test_request_payload = {"ticker": "GOOG"}
 
@@ -64,7 +63,6 @@ def test_read_prediction_incorrect_id(test_app, db):
     assert response.json()["detail"] == "Prediction not found"
 
 
-@pytest.mark.asyncio
 def test_delete_prediction(test_app, db):
     test_request_payload = {"ticker": "GOOG"}
 
