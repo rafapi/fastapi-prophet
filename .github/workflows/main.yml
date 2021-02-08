@@ -6,7 +6,6 @@ on:
 
 env:
   IMAGE: ghcr.io/${{ github.repository }}/web-app
-#   IMAGE: docker.pkg.github.com/$(echo $GITHUB_REPOSITORY | tr '[A-Z]' '[a-z]')/web-prophet
 
 jobs:
 
@@ -24,7 +23,6 @@ jobs:
       - name: Login to Registry
         uses: docker/login-action@v1
         with:
-          # registry: docker.pkg.github.com
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CR_PAT }}
@@ -51,7 +49,6 @@ jobs:
       - name: Login to Registry
         uses: docker/login-action@v1
         with:
-          # registry: docker.pkg.github.com
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CR_PAT }}
@@ -74,13 +71,11 @@ jobs:
 
       - name: Install requirements
         run: |
-          docker exec prophet ls .
-          docker exec prophet pip install -r ./requirements-dev.in
-#          docker exec prophet pip install black || true
+          docker exec prophet pip install -r ./requirements-dev.in || true
       - name: Print logs
         run: |
           docker logs prophet
-          
+
       - name: Pytest
         run: docker exec prophet pytest . -p no:warnings -vv
 
@@ -92,7 +87,7 @@ jobs:
 
       - name: isort
         run: docker exec prophet python -m isort . --check-only
-        
+
       - name: Submit coverage report
         run: |
           codecov --token=${{ secrets.CODECOV_PAT }}
