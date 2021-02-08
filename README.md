@@ -10,7 +10,7 @@
    <a href="https://github.com/rafapi/fastapi-prophet" target="_blank">
     <img src="https://codecov.io/gh/rafapi/fastapi-prophet/branch/master/graph/badge.svg" alt="Coverage">
    </a>
-     <img src="https://img.shields.io/github/license/rafapi/fastapi-prophet.svg">
+     <img src="https://img.shields.io/github/license/rafapi/fastapi-prophet">
 </p>
 The main objective of this project is to evaluate some async options for ML backends
 
