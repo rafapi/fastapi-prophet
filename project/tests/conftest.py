@@ -32,7 +32,6 @@ def test_app():
     settings.environment = "test"
     settings.database_url = os.getenv("DATABASE_TEST_URL")
     app = create_application()
-    assert settings == 1
     with TestClient(app) as test_client:
         yield test_client
 
