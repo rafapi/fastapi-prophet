@@ -88,6 +88,6 @@ jobs:
       - name: isort
         run: docker exec prophet python -m isort . --check-only
 
-      - name: Submit coverage report
-        run: |
-          codecov --token=${{ secrets.CODECOV_PAT }}
+#       - name: Submit coverage report
+#         run: |
+#           codecov --token=${{ secrets.CODECOV_PAT }}
