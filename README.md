@@ -6,13 +6,18 @@ The main objective of this project is to evaluate some async options for ML back
 
 ## Details
 * Dev stack
-  * FastAPI
-  * SQLAlchemy[postgresql]
-  * fbprophet
-  * yfinance
-* Testing: `pytest`
-* Linting: `black`, `flake8` and `isort`
-* CI/CD via Github Actions
+  * FastAPI: https://fastapi.tiangolo.com
+  * SQLAlchemy: https://docs.sqlalchemy.org/en/14/core
+  * Databases (Async SQLAlchemy Core access): https://github.com/encode/databases
+  * fbprophet: https://facebook.github.io/prophet
+  * yfinance: https://github.com/ranaroussi/yfinance
+* Testing:
+  * pytest: https://docs.pytest.org/en/stable/
+* Linting:
+  * black: https://github.com/psf/black
+  * flake8: https://flake8.pycqa.org/en/latest/
+  * isort: https://pycqa.github.io/isort/
+* CI via Github Actions
 
 ## Actions
 * Train the model for a ticker
