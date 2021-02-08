@@ -17,7 +17,7 @@ def test_db_test_url(test_app):
 def test_create_prediction(test_app, db):
     test_request_payload = {"ticker": "GOOG"}
 
-    response = test_app.post("/predict/", json.dumps(test_request_payload))
+    response = test_app.post("/predict/", json.dumps(test_request_payload), db)
 
     prediction_id = response.json()["id"]
 
@@ -30,7 +30,7 @@ def test_create_prediction_invalid_json(test_app):
     assert response.status_code == 422
 
 
-def test_read_prediction(test_app, monkeypatch):
+def test_read_prediction(test_app, db, monkeypatch):
     test_data = {
         "id": 1,
         "ticker": "MSFT",
@@ -48,7 +48,7 @@ def test_read_prediction(test_app, monkeypatch):
         "created_date": datetime.utcnow().isoformat(),
     }
 
-    async def mock_get(id):
+    async def mock_get(id, db):
         return test_data
 
     monkeypatch.setattr(crud, "get", mock_get)
@@ -58,7 +58,7 @@ def test_read_prediction(test_app, monkeypatch):
     assert response.json() == pred_to_dict(test_data)
 
 
-def test_read_prediction_incorrect_id(test_app):
+def test_read_prediction_incorrect_id(test_app, db):
     response = test_app.get("/predict/999/")
     assert response.status_code == 404
     assert response.json()["detail"] == "Prediction not found"
@@ -69,7 +69,7 @@ def test_delete_prediction(test_app, db):
     test_request_payload = {"ticker": "GOOG"}
 
     post_response = test_app.post(
-        "/predict/", json.dumps(test_request_payload)
+        "/predict/", json.dumps(test_request_payload), db
     )
     prediction_id = post_response.json()["id"]
 
