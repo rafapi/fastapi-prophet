@@ -1,7 +1,7 @@
 # Stock Market predictions with Prophet and FastAPI
 
 <p align="left">
-   <img src="https://github.com/rafapi/fastapi-prophet/workflows/Continuous%20Integration%20and%20Delivery/badge.svg?branch=master">
+   <img src="https://github.com/rafapi/fastapi-prophet/workflows/Continuous%20Integration/badge.svg?branch=master">
    <a href="https://github.com/rafapi/fastapi-prophet" target="_blank">
       <img src="https://codecov.io/gh/rafapi/fastapi-prophet/branch/master/graph/badge.svg" alt="Coverage">
    </a>
