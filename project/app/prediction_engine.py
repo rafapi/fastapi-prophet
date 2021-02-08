@@ -1,10 +1,10 @@
 import json
 
+from fastapi import HTTPException
+
 from app.models.pydantic import StockIn
 from app.models.sqlalchemy import predictions
 from app.prophet import convert, predict
-
-from fastapi import HTTPException
 
 
 async def generate_prediction(id: int, ticker: StockIn, database):

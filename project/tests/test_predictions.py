@@ -1,6 +1,5 @@
 import json
 import os
-
 from datetime import datetime
 
 from app.api import crud
@@ -66,9 +65,7 @@ def test_read_prediction_incorrect_id(test_app, db):
 def test_delete_prediction(test_app, db):
     test_request_payload = {"ticker": "GOOG"}
 
-    post_response = test_app.post(
-        "/predict/", json.dumps(test_request_payload), db
-    )
+    post_response = test_app.post("/predict/", json.dumps(test_request_payload), db)
     prediction_id = post_response.json()["id"]
 
     del_response = test_app.delete(f"/predict/{prediction_id}/")
