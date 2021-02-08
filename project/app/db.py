@@ -9,25 +9,24 @@ from app.config import get_settings
 database = Optional[Database]
 
 
+settings = get_settings()
+
+
 def get_eng():
-    settings = get_settings()
-    dburl = settings.database_url
+    db_url = settings.database_url
     if settings.testing:
-        engine = create_engine(dburl, connect_args={"check_same_thread": False})
+        engine = create_engine(db_url, connect_args={"check_same_thread": False})
     else:
-        engine = create_engine(dburl)
+        engine = create_engine(db_url)
     return engine
 
 
 def get_db() -> Database:
     global database
-    settings = get_settings()
-    dburl = settings.database_url
-    # if database.is_connected:
-    #     database = database.connection()
+    db_url = settings.database_url
     if settings.testing:
-        database = Database(dburl, force_rollback=True)
+        database = Database(db_url, force_rollback=True)
     else:
-        database = Database(dburl)
+        database = Database(db_url)
 
     return database
