@@ -5,6 +5,7 @@
 The main objective of this project is to evaluate some async options for ML backends
 
 ## Details
+* CI via Github Actions
 * Dev stack
   * FastAPI: https://fastapi.tiangolo.com
   * SQLAlchemy: https://docs.sqlalchemy.org/en/14/core
@@ -17,7 +18,6 @@ The main objective of this project is to evaluate some async options for ML back
   * black: https://github.com/psf/black
   * flake8: https://flake8.pycqa.org/en/latest/
   * isort: https://pycqa.github.io/isort/
-* CI via Github Actions
 
 ## Actions
 * Train the model for a ticker
