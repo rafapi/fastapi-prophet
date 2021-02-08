@@ -4,10 +4,13 @@ import asyncio
 import pytest
 from fastapi.testclient import TestClient
 
-from app.config import get_settings
+from app.config import get_settings, Settings
 
 from app.db import database
 from app.main import create_application
+
+
+settings = get_settings()
 
 
 @pytest.fixture(scope="module")
@@ -17,14 +20,19 @@ def event_loop():
     loop.close()
 
 
+def get_settings_override():
+    return Settings(
+        testing=1, database_url=os.environ.get("DATABASE_TEST_URL")
+    )
+
+
 @pytest.fixture(scope="module")
 def test_app():
-    settings = get_settings()
-    if settings.database_url is None:
-        settings.testing = True
-        settings.environment = "test"
-        settings.database_url = os.getenv("DATABASE_TEST_URL")
+    settings.testing = True
+    settings.environment = "test"
+    settings.database_url = os.getenv("DATABASE_TEST_URL")
     app = create_application()
+    assert settings == 1
     with TestClient(app) as test_client:
         yield test_client
 
