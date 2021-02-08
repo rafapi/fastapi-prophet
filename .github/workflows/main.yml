@@ -31,8 +31,8 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          context: ./project
-          file: ./project/Dockerfile.prod
+          context: ./fastapi-prophet
+          file: ./fastapi-prophet/Dockerfile.prod
           push: true
           tags: ${{ env.IMAGE }}:latest
       - name: Image digest
