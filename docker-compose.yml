@@ -38,4 +38,5 @@ services:
       - PORT:8765
       - ENVIRONMENT:dev
       - TESTING:1
-      - DATABASE_URL=sqlite:///sqlite.db
+      - DATABASE_URL=sqlite:///sqlite_prod.db
+      - DATABASE_TEST_URL=sqlite:///sqlite_test.db
