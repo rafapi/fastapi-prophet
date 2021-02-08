@@ -2,11 +2,11 @@
 
 <p align="left">
    <img src="https://github.com/rafapi/fastapi-prophet/workflows/Continuous%20Integration%20and%20Delivery/badge.svg?branch=master">
-    <img src="https://img.shields.io/github/last-commit/rafapi/fastapi-prophet">
    <a href="https://github.com/rafapi/fastapi-prophet" target="_blank">
-    <img src="https://codecov.io/gh/rafapi/fastapi-prophet/branch/master/graph/badge.svg" alt="Coverage">
+      <img src="https://codecov.io/gh/rafapi/fastapi-prophet/branch/master/graph/badge.svg" alt="Coverage">
    </a>
      <img src="https://img.shields.io/github/license/rafapi/fastapi-prophet">
+     <img src="https://img.shields.io/github/last-commit/rafapi/fastapi-prophet">
 </p>
 The main objective of this project is to evaluate some async options for ML backends
 
