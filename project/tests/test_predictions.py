@@ -56,6 +56,19 @@ def test_read_prediction(test_app, db, monkeypatch):
     assert response.json() == pred_to_dict(test_data)
 
 
+def test_read_all_predictions(test_app, db):
+    test_request_payload = {"ticker": "GOOG"}
+
+    response_post = test_app.post("/predict/", json.dumps(test_request_payload), db)
+
+    response_get = test_app.get("/predict/")
+    assert response_get.status_code == 200
+    response_list = response_get.json()
+
+    prediction_id = response_post.json()["id"]
+    assert len(list(filter(lambda d: d["id"] == prediction_id, response_list))) == 1
+
+
 def test_read_prediction_incorrect_id(test_app, db):
     response = test_app.get("/predict/999/")
     assert response.status_code == 404
