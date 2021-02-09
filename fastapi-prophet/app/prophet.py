@@ -1,14 +1,14 @@
 import datetime
-from pathlib import Path
+import pathlib
 
 import joblib
 import pandas as pd
 import yfinance as yf
 from fbprophet import Prophet
 
-BASE_DIR = Path(__file__).resolve(strict=True).parent
-TRAINED_DIR = Path(BASE_DIR) / "trained"
-PLOTS_DIR = Path(BASE_DIR) / "plots"
+BASE_DIR = pathlib.Path(__file__).resolve(strict=True).parent
+TRAINED_DIR = pathlib.Path(BASE_DIR) / "trained"
+PLOTS_DIR = pathlib.Path(BASE_DIR) / "plots"
 TODAY = datetime.date.today()
 
 
