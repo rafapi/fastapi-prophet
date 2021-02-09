@@ -78,7 +78,9 @@ jobs:
         run: docker logs prophet
 
       - name: Test and Generate coverage report
-        run: docker exec prophet pytest --cov-report=xml --cov=./ -p no:warnings -vv
+        run: |
+          docker exec prophet pytest --cov-report=xml --cov=./ -p no:warnings -vv
+          docker exec prophet ls .
           
       - name: Place coverage report in shared folder
         run: |
