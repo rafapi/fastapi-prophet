@@ -59,9 +59,11 @@ jobs:
 
       - name: Run container
         run: |
+          mkdir reports
           docker run \
             -d \
             --name prophet \
+            -v "$PWD/reports:/reports" \
             -e PORT=8765 \
             -e ENVIRONMENT=dev \
             -e DATABASE_TEST_URL=sqlite:///sqlite.db \
@@ -77,12 +79,16 @@ jobs:
           docker logs prophet
 
       - name: Test and Generate coverage report
-        run: docker exec prophet pytest --cov-report=xml --cov=./ -p no:warnings -vv
+        run: |
+          docker exec prophet pytest --cov-report=xml --cov=./ -p no:warnings -vv
+          mv coverage.xml reports
 
       - name: Upload coverage to Codecov
-        run: docker exec prophet bash -c "bash <(curl -s https://codecov.io/bash)" \
-          -t ${{ secrets.CODECOV_PAT }} \
-          || echo 'Codecov failed to upload'
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_PAT }}
+          files: ./coverage.xml
+          directory: reports
 
       - name: Flake8
         run: docker exec prophet python -m flake8 .
