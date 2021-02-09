@@ -1,6 +1,5 @@
 __pycache__
 *.png
 *.joblib
-coverage.xml
 .coverage
 **/*/*.db
