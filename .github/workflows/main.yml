@@ -75,6 +75,7 @@ jobs:
       - name: Print logs
         run: |
           docker logs prophet
+          docker exec prophet ls .
 
       - name: Pytest
         run: docker exec prophet pytest . -p no:warnings -vv
