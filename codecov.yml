@@ -8,6 +8,5 @@ coverage:
         paths:
           - "fastapi-prophet/app"
 
-# ignore:
-#   - "fastapi-prophet/tests"
-#   - "fastapi-prophet/db"
+ignore:
+  - "fastapi-prophet/tests/conftest.py"
