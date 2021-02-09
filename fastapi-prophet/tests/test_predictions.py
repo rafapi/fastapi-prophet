@@ -84,3 +84,22 @@ def test_delete_prediction(test_app, db):
     del_response = test_app.delete(f"/predict/{prediction_id}/")
 
     assert del_response.json()["id"] == prediction_id
+
+
+def test_delete_prediction_incorrect_id(test_app, db):
+    response = test_app.delete("/predict/999/")
+    assert response.status_code == 404
+    assert response.json()["detail"] == "Prediction not found"
+
+    response = test_app.delete("/predict/0/")
+    assert response.status_code == 422
+    assert response.json() == {
+        "detail": [
+            {
+                "loc": ["path", "id"],
+                "msg": "ensure this value is greater than 0",
+                "type": "value_error.number.not_gt",
+                "ctx": {"limit_value": 0},
+            }
+        ]
+    }
