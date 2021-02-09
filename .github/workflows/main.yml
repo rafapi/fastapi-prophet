@@ -54,11 +54,10 @@ jobs:
           password: ${{ secrets.CR_PAT }}
 
       - name: Pull images
-        run: |
-          docker pull ${{ env.IMAGE }}:latest || true
+        run: docker pull ${{ env.IMAGE }}:latest || true
           
-      - name: Create reports directory
-        run: mkdir reports
+#       - name: Create reports directory
+#         run: mkdir reports
 
       - name: Run container
         run: |
@@ -72,9 +71,6 @@ jobs:
             -e DATABASE_URL=sqlite:///sqlite_prod.db \
             -p 5003:8765 \
             ${{ env.IMAGE }}:latest
-
-      - name: List pwd contents
-        run: ls .
           
       - name: Install requirements
         run: docker exec prophet pip install -r ./requirements-dev.in || true
@@ -82,21 +78,13 @@ jobs:
       - name: Print logs
         run: docker logs prophet
 
-      - name: Test and Generate coverage report
-        run: |
-          docker exec prophet pytest --cov-report=xml --cov=./ -p no:warnings -vv
-          docker exec prophet ls /
+      - name: Run tests and generate coverage report
+        run: docker exec prophet pytest --cov-report=xml --cov=./ -p no:warnings -vv
           
-      - name: Place coverage report in shared folder
-        run: |
-          docker exec prophet bash -c "mv coverage.xml /reports/"
-          docker exec prophet ls .
-          docker exec prophet ls /reports
-        
-      - name: List shared folder contents
-        run: ls reports
+      - name: Place coverage report in shared volume
+        run: docker exec prophet bash -c "mv coverage.xml /reports/"
 
-      - name: Upload coverage to Codecov
+      - name: Upload coverage report to Codecov
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_PAT }}
