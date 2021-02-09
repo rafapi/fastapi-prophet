@@ -65,7 +65,7 @@ jobs:
           docker run \
             -d \
             --name prophet \
-            -v reports:./reports \
+            -v reports:/reports \
             -e PORT=8765 \
             -e ENVIRONMENT=dev \
             -e DATABASE_TEST_URL=sqlite:///sqlite.db \
@@ -85,7 +85,7 @@ jobs:
       - name: Test and Generate coverage report
         run: |
           docker exec prophet pytest --cov-report=xml --cov=./ -p no:warnings -vv
-          docker exec prophet ls .
+          docker exec prophet ls /
           
       - name: Place coverage report in shared folder
         run: |
