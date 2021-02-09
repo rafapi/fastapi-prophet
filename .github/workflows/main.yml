@@ -75,10 +75,15 @@ jobs:
       - name: Print logs
         run: |
           docker logs prophet
-          docker exec prophet ls .
 
-      - name: Pytest
-        run: docker exec prophet pytest . -p no:warnings -vv
+      - name: Test and Generate coverage report
+        run: docker exec prophet pytest --cov-report=xml --cov=./ -p no:warnings -vv
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_PAT }}
+          files: ./coverage.xml
 
       - name: Flake8
         run: docker exec prophet python -m flake8 .
