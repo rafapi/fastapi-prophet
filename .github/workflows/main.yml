@@ -80,11 +80,9 @@ jobs:
         run: docker exec prophet pytest --cov-report=xml --cov=./ -p no:warnings -vv
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_PAT }}
-          files: ./coverage.xml
-          directory: fastapi-prophet
+        run: docker exec prophet bash <(curl -s https://codecov.io/bash) \
+          || echo 'Codecov failed to upload' \
+          -t ${{ secrets.CODECOV_PAT }}
 
       - name: Flake8
         run: docker exec prophet python -m flake8 .
