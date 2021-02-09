@@ -42,3 +42,4 @@ services:
       - TESTING:1
       - DATABASE_URL=sqlite:///sqlite_prod.db
       - DATABASE_TEST_URL=sqlite:///sqlite_test.db
+      - CODECOV_TOKEN=ffff585d-c5e3-4327-8d28-295b2f5d7f17
