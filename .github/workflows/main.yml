@@ -74,7 +74,7 @@ jobs:
             ${{ env.IMAGE }}:latest
 
       - name: List root contents
-        run: ls .
+        run: ls /
           
       - name: Install requirements
         run: docker exec prophet pip install -r ./requirements-dev.in || true
@@ -89,18 +89,18 @@ jobs:
           
       - name: Place coverage report in shared folder
         run: |
-          docker exec prophet bash -c "mv coverage.xml reports/"
+          docker exec prophet bash -c "mv coverage.xml /reports/"
           docker exec prophet ls .
-          docker exec prophet ls reports
+          docker exec prophet ls /reports
         
       - name: List shared folder contents
-        run: ls ./reports
+        run: ls /reports
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_PAT }}
-          files: ./reports/coverage.xml
+          files: /reports/coverage.xml
           directory: reports
 
       - name: Flake8
