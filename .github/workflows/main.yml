@@ -72,8 +72,8 @@ jobs:
             ${{ env.IMAGE }}:latest
 
       - name: Install requirements
-        run: |
-          docker exec prophet pip install -r ./requirements-dev.in || true
+        run: docker exec prophet pip install -r ./requirements-dev.in || true
+        
       - name: Print logs
         run: docker logs prophet
 
@@ -81,7 +81,10 @@ jobs:
         run: docker exec prophet pytest --cov-report=xml --cov=./ -p no:warnings -vv
           
       - name: Place coverage report in shared folder
-        run: docker exec prophet mv coverage.xml reports
+        run: |
+          docker exec prophet mv coverage.xml reports
+          docker exec prophet ls .
+          docker exec prophet ls reports
         
       - name: List shared folder contents
         run: ls reports
