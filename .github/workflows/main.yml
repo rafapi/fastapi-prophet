@@ -100,7 +100,7 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_PAT }}
-          files: /reports/coverage.xml
+          files: reports/coverage.xml
           directory: reports
 
       - name: Flake8
