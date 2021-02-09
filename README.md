@@ -8,17 +8,20 @@
      <img src="https://img.shields.io/github/license/rafapi/fastapi-prophet">
      <img src="https://img.shields.io/github/last-commit/rafapi/fastapi-prophet">
 </p>
-The main objective of this project is to evaluate some async options for ML backends
+Train prophet models and run stock market predictions for a given ticker
 
 ## Details
 * Dev stack
   * FastAPI: https://fastapi.tiangolo.com
+  * Docker: https://docs.docker.com/
   * SQLAlchemy: https://docs.sqlalchemy.org/en/14/core
-  * Databases (Async SQLAlchemy Core access): https://github.com/encode/databases
-  * fbprophet: https://facebook.github.io/prophet
+  * Databases (Async SQLAlchemy Core queries): https://github.com/encode/databases
+  * fbprophet (Time Series forecasting): https://facebook.github.io/prophet
   * yfinance: https://github.com/ranaroussi/yfinance
 * Testing:
   * pytest: https://docs.pytest.org/en/stable
+  * pytest-cov: https://github.com/pytest-dev/pytest-cov
+  * Codecov: https://docs.codecov.io
 * Linting and Formatting:
   * black: https://github.com/psf/black
   * flake8: https://flake8.pycqa.org/en/latest
