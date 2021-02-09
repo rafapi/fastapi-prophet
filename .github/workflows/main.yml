@@ -56,6 +56,9 @@ jobs:
       - name: Pull images
         run: |
           docker pull ${{ env.IMAGE }}:latest || true
+          
+      - name: Create named volume
+        run: docker volume create reports
 
       - name: Run container
         run: |
