@@ -3,3 +3,4 @@ __pycache__
 *.joblib
 .coverage
 **/*/*.db
+coverage.xml
