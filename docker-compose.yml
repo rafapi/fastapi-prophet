@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.7'
 
 services:
 
@@ -32,6 +32,8 @@ services:
       context: ./fastapi-prophet
       dockerfile: ./Dockerfile.prod
     command: gunicorn --bind 0.0.0.0:8000 app.main:app -k uvicorn.workers.UvicornWorker
+    volumes:
+      - ./fastapi-prophet/:/usr/src/app/
     ports:
       - 8004:8000
     environment:
