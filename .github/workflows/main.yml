@@ -75,13 +75,16 @@ jobs:
         run: |
           docker exec prophet pip install -r ./requirements-dev.in || true
       - name: Print logs
-        run: |
-          docker logs prophet
+        run: docker logs prophet
 
       - name: Test and Generate coverage report
-        run: |
-          docker exec prophet pytest --cov-report=xml --cov=./ -p no:warnings -vv
-          docker exec prophet mv coverage.xml reports
+        run: docker exec prophet pytest --cov-report=xml --cov=./ -p no:warnings -vv
+          
+      - name: Place coverage report in shared folder
+        run: docker exec prophet mv coverage.xml reports
+        
+      - name: List shared folder contents
+        run: ls reports
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
