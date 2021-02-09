@@ -56,18 +56,13 @@ jobs:
       - name: Pull images
         run: |
           docker pull ${{ env.IMAGE }}:latest || true
-          
-      - name: Create reports folder
-        run: |
-          mkdir reports
-          ls .
 
       - name: Run container
         run: |
           docker run \
             -d \
             --name prophet \
-            -v $(pwd)/reports:/reports \
+            -v reports:/reports \
             -e PORT=8765 \
             -e ENVIRONMENT=dev \
             -e DATABASE_TEST_URL=sqlite:///sqlite.db \
@@ -75,6 +70,9 @@ jobs:
             -p 5003:8765 \
             ${{ env.IMAGE }}:latest
 
+      - name: List root contents
+        run: ls .
+          
       - name: Install requirements
         run: docker exec prophet pip install -r ./requirements-dev.in || true
         
