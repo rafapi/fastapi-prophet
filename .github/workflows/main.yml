@@ -81,7 +81,7 @@ jobs:
       - name: Test and Generate coverage report
         run: |
           docker exec prophet pytest --cov-report=xml --cov=./ -p no:warnings -vv
-          mv coverage.xml reports
+          docker exec prophet mv coverage.xml reports
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
