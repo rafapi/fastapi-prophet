@@ -67,7 +67,7 @@ jobs:
           docker run \
             -d \
             --name prophet \
-            -v $PWD/reports:/reports \
+            -v $(pwd)/reports:/reports \
             -e PORT=8765 \
             -e ENVIRONMENT=dev \
             -e DATABASE_TEST_URL=sqlite:///sqlite.db \
