@@ -2,9 +2,12 @@ coverage:
   status:
     project:
       default:
-        target: 80%
+        # default
+        target: auto
         threshold: 2%
+        paths:
+          - "fastapi-prophet/app"
 
-ignore:
-  - "fastapi-prophet/tests"
-  - "fastapi-prophet/db"
+# ignore:
+#   - "fastapi-prophet/tests"
+#   - "fastapi-prophet/db"
