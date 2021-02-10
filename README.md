@@ -37,4 +37,5 @@ Train prophet models and run stock market predictions for a given ticker
 * Authentication
 * Extra information fields based on third-party content
 * Add images if available from source
-* Frontend for plots and human interaction
+* Input training timeframe
+* User Interface
