@@ -30,8 +30,11 @@ Train prophet models and run stock market predictions for a given ticker
 
 ## Actions
 * Train the model for a ticker
-* Run a prediction for that ticker
-* Fetch all the results or those of a specific ticker
+### CRUD
+   * Create prediction for that ticker
+   * Read results for all tickers or for individual ones
+   * Update the info for a ticker should be done by creating a new one since this date is only relevant for the given time input
+   * Delete a specific ticker
 
 ## Future additions
 * Authentication
