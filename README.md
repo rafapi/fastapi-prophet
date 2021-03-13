@@ -39,6 +39,6 @@ Train prophet models and run stock market predictions for a given ticker
 ## Future additions
 * Authentication
 * Extra information fields based on third-party content
-* Add images if available from source
+* Add plots and images if available from source
 * Input training timeframe
 * User Interface
