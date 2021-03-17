@@ -1,5 +1,5 @@
 databases[postgresql]==0.4.1
-fastapi==0.62.0
+fastapi==0.63.0
 fbprophet==0.7.1
 joblib==1.0.0
 plotly==4.14.3
