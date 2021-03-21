@@ -31,6 +31,7 @@ Train prophet models and run stock market predictions for a given ticker
 ## Actions
 * Train the model for a ticker
 * Check the weekly prediction for a previously trained ticker
+* Check the weekly prediction for all the trained tickers
 
 #### CRUD
    * Create prediction for that ticker
