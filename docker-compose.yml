@@ -8,7 +8,7 @@ services:
     volumes:
       - ./fastapi-prophet/:/usr/src/app/
     ports:
-      - 8004:8000
+      - 8006:8000
     environment:
       - ENVIRONMENT:dev
       - TESTING:0
