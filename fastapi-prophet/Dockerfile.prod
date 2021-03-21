@@ -46,10 +46,6 @@ COPY --from=builder /opt/venv /opt/venv
 # activate the venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-RUN pip install --upgrade pip
-RUN pip install "uvicorn[standard]==0.13.1"
-RUN pip install "gunicorn==20.0.4" "databases[sqlite]==0.4.1"
-
 WORKDIR /usr/src/app
 
 COPY . .
