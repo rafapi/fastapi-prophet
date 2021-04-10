@@ -14,7 +14,7 @@ Train prophet models and run stock market predictions for a given ticker
 * Dev dependencies
   * FastAPI: https://fastapi.tiangolo.com
   * Docker: https://docs.docker.com/
-  * SQLAlchemy: https://docs.sqlalchemy.org/en/14/core
+  * SQLAlchemy-Core: https://docs.sqlalchemy.org/en/14/core
   * Databases (Async SQLAlchemy Core queries): https://github.com/encode/databases
   * fbprophet (Time Series forecasting): https://facebook.github.io/prophet
   * yfinance (market data downloader): https://github.com/ranaroussi/yfinance
