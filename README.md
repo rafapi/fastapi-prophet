@@ -26,7 +26,7 @@ Train prophet models and run stock market predictions for a given ticker
   * black: https://github.com/psf/black
   * flake8: https://flake8.pycqa.org/en/latest
   * isort: https://pycqa.github.io/isort
-* Continuous Integration via Github Actions
+* Continuous Integration by Github Actions
 
 ## Actions
 * Train the model for a ticker
