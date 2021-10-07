@@ -14,7 +14,7 @@ async def get(id: int, database):
 
 async def get_all(database):
     query = predictions.select()
-    return await database.fetch_all(query=query)
+    return await database.execute(query).fetchall()
 
 
 async def delete(id: int, database):
