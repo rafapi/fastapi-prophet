@@ -3,4 +3,6 @@ fastapi==0.68.2
 prophet==1.0.1
 joblib==1.0.0
 plotly==4.14.3
-yfinance==0.1.55
+yfinance==0.1.63
+uvicorn[standard]==0.15.0
+gunicorn==20.1.0
