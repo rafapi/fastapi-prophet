@@ -48,6 +48,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 RUN pip install --upgrade pip
 RUN pip install "uvicorn[standard]==0.13.1" "gunicorn==20.0.4"
+RUN pip install "aiosqlite==0.17.0"
 
 WORKDIR /usr/src/app
 
