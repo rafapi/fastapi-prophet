@@ -1,4 +1,4 @@
-databases[postgresql]==0.4.1
+databases[postgresql]==0.5.2
 fastapi==0.68.2
 prophet==1.0.1
 joblib==1.0.0
