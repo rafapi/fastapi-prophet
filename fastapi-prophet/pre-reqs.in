@@ -1,3 +1,4 @@
+wheel==0.37.0
 Cython>=0.22
 # cmdstanpy>=0.9.5
 psycopg2-binary==2.8.6
