@@ -1,4 +1,4 @@
-aiosqlite==0.16.1
+aiosqlite==0.17.0
 databases[sqlite]==0.5.2
 pytest==6.2.0
 pytest-cov>=2.10.0
