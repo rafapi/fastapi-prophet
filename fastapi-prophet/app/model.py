@@ -13,7 +13,7 @@ TODAY = datetime.date.today()
 
 
 def train(ticker="MSFT"):
-    data = yf.download(ticker, "2020-01-01", TODAY.strftime("%Y-%m-%d"))
+    data = yf.download(ticker, "2021-02-01", TODAY.strftime("%Y-%m-%d"))
     data.head()
     data["Adj Close"].plot(title=f"{ticker} Stock Adjust Closing Price")
 
