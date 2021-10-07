@@ -4,7 +4,7 @@ import pathlib
 import joblib
 import pandas as pd
 import yfinance as yf
-from fbprophet import Prophet
+from prophet import Prophet
 
 BASE_DIR = pathlib.Path(__file__).resolve(strict=True).parent
 TRAINED_DIR = pathlib.Path(BASE_DIR) / "trained"
