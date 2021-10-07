@@ -1,7 +1,7 @@
 from fastapi import APIRouter, BackgroundTasks
 
-from app.models.pydantic import StockIn
 from app.model import train
+from app.models.pydantic import StockIn
 
 router = APIRouter()
 
