@@ -5,8 +5,9 @@
    <a href="https://github.com/rafapi/fastapi-prophet" target="_blank">
       <img src="https://codecov.io/gh/rafapi/fastapi-prophet/branch/master/graph/badge.svg" alt="Coverage">
    </a>
-     <img src="https://img.shields.io/github/license/rafapi/fastapi-prophet">
-     <img src="https://img.shields.io/github/last-commit/rafapi/fastapi-prophet">
+   <img src="https://img.shields.io/github/license/rafapi/fastapi-prophet">
+   <img src="https://img.shields.io/github/last-commit/rafapi/fastapi-prophet">
+   <img src="https://img.shields.io/badge/python-%3E%3D3.7-brightgreen" alt="Python 3.7 3.8 3.9" title="mvenv supports Python 3.7 and above"></a>
 </p>
 Train prophet models and run stock market predictions for a given ticker
 
